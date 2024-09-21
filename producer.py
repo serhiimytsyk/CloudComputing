@@ -17,7 +17,8 @@
 import os   # need this for popen
 import time # for sleep
 import json # for json conversion
-import tensorflow # for cifar10
+
+from tensorflow.keras.datasets import cifar10 # for cifar10
 
 from kafka import KafkaProducer  # producer of events
 
@@ -30,7 +31,7 @@ producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092",
                                           acks=1)  # wait for leader to write to log
 
 # acquire the CIFAR10 dataset
-(x_train, y_train), (x_test, y_test) = tensorflow.keras.cifar10.load_data()
+(x_train, y_train), (x_test, y_test) = cifar10.load_data()
 
 # say we send the contents 100 times after a sleep of 1 sec in between
 for i in range (100):
