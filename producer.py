@@ -18,6 +18,8 @@ import os   # need this for popen
 import time # for sleep
 import json # for json conversion
 
+import random # for random
+
 import tensorflow as tf 
 import pandas as pd 
 import numpy as np
@@ -46,26 +48,31 @@ for i in range (10): ##################TODO#################################TODO
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
+    # randomize image
+    index = random.randint(0, 59999)
+
     # blur the images
     x_train, x_test = x_train / 255.0, x_test / 255.0
 
-    ground_truth = int(y_train[i][0])
-    data = x_train[i].tolist()
+    # get ground truth and data variables in JSON serializable formats
+    ground_truth = int(y_train[index][0])
+    data = x_train[index].tolist()
 
-    # send the contents under topic "images". Note that it expects
-    # the contents in bytes so we convert it to bytes.
-    #
-
+    # create json
     image = {
-        "ID": i,
+        "ID": index,
         "GroundTruth": ground_truth,
         "Data": data
     }
 
+    # create unique jsons
     out_file = open(f"file {i}.json", "w")
     new_image = json.dump(image, out_file, indent=6)
     out_file.close()
 
+    # send the contents under topic "images". Note that it expects
+    # the contents in bytes so we convert it to bytes.
+    #
 
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
