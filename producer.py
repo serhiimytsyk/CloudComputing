@@ -31,9 +31,9 @@ from kafka import KafkaProducer  # producer of events
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
-                                          acks=1,
-                                          api_version=(0, 10, 1))  # wait for leader to write to log
+#producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
+                                          #acks=1,
+                                          #api_version=(0, 10, 1))  # wait for leader to write to log
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
@@ -70,12 +70,12 @@ for i in range (100):
     # as such but just taking the output as received and sending it as bytes
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
-    #
-    producer.send ("images", value=new_image)
-    producer.flush ()   # try to empty the sending buffer
+    #   
+    #producer.send ("images", value=new_image)
+    #producer.flush ()   # try to empty the sending buffer
 
     # sleep a second
     time.sleep (1)
 
 # we are done
-producer.close ()
+#producer.close ()
