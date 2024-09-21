@@ -48,7 +48,7 @@ for i in range (100):
     contents = process.read ()
 
     ground_truth = int(y_train[i][0])
-    data = x_train[i].toList()
+    data = x_train[i].tolist()
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
