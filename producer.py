@@ -62,6 +62,7 @@ for i in range (100):
 
     out_file = open(f"file {i}.json", "w")
     new_image = json.dump(image, out_file, indent=6)
+    out_file.close()
 
 
     # Note that here I am not serializing the contents into JSON or anything
