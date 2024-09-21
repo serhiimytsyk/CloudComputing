@@ -63,7 +63,7 @@ for i in range (1): ##################TODO#################################TODO#
 
     array_image = list(image.items())
     out_file = open(f"file {i}.json", "w", encoding='utf-8')
-    new_image = json.dump(image, out_file, indent=6)
+    new_image = json.dump(array_image, out_file, indent=6)
     out_file.close()
 
 
