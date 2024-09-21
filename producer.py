@@ -59,7 +59,7 @@ for i in range (10): ##################TODO#################################TODO
         "Data": data
     }
 
-    out_file = open(f"file {i}.json", "w", encoding='utf-8')
+    out_file = open(f"file {i}.json", "w")
     new_image = json.dump(image, out_file, indent=6)
     out_file.close()
 
