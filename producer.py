@@ -36,11 +36,6 @@ producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092",
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
-x_train, x_test = x_train / 255.0, x_test / 255.0
-print("----------- Train Data -----------")
-print(x_train[:1])
-print("----------- Test Data -----------")
-print(x_test[:1])
 
 # say we send the contents 100 times after a sleep of 1 sec in between
 for i in range (100):
@@ -51,15 +46,27 @@ for i in range (100):
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    # send the contents under topic utilizations. Note that it expects
+    ground_truth = y_train[i]
+    data = x_train[i]
+
+    # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
     #
+
+    image = {
+        "ID": i,
+        "GroundTruth": ground_truth,
+        "Data": data
+    }
+
+    str_image = json.dumps(image)
+
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #
-    producer.send ("images", value=bytes (contents, 'ascii'))
+    producer.send ("images", value=bytes (str_image, 'ascii'))
     producer.flush ()   # try to empty the sending buffer
 
     # sleep a second
