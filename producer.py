@@ -60,14 +60,16 @@ for i in range (100):
         "Data": data
     }
 
-    str_image = json.dump(image)
+    out_file = open(f"file {i}.json", "w")
+    new_image = json.dump(image, out_file, indent=6)
+
 
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #
-    producer.send ("images", value=str_image)
+    producer.send ("images", value=new_image)
     producer.flush ()   # try to empty the sending buffer
 
     # sleep a second
