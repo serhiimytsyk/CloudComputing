@@ -46,7 +46,7 @@ for i in range (1): ##################TODO#################################TODO#
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    ground_truth = int(y_train[i])
+    ground_truth = y_train[i][0]
     #print('ground truth {}'.format(ground_truth.shape))
     data = x_train[i]
     #print('data {}'.format(data.shape))
