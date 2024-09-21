@@ -46,6 +46,10 @@ for i in range (10): ##################TODO#################################TODO
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
+    # blur the images
+    x_train, x_test = x_train / 255.0, x_test / 255.0
+    y_train, y_test = y_train.flatten(), y_test.flatten()
+
     ground_truth = int(y_train[i][0])
     data = x_train[i].tolist()
 
