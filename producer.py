@@ -60,7 +60,8 @@ for i in range (100):
         "Data": data
     }
 
-    out_file = open(f"file {i}.json", "w")
+    array_image = image.tolist()
+    out_file = open(f"file {i}.json", "w", encoding='utf-8')
     new_image = json.dump(image, out_file, indent=6)
     out_file.close()
 
