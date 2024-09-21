@@ -46,16 +46,18 @@ for i in range (1): ##################TODO#################################TODO#
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    (train_images, train_labels), (test_images, test_labels)= tf.keras.datasets.cifar10.load_data()
-    print('Images Shape: {}'.format(train_images.shape))
-    print('Labels Shape: {}'.format(train_labels.shape))
-    idx = (train_labels == 6).reshape(train_images.shape[0])
-    print('Index Shape: {}'.format(idx.shape))
-    filtered_images = train_images[idx]
-    print('Filtered Images Shape: {}'.format(filtered_images.shape))
+    # (train_images, train_labels), (test_images, test_labels)= tf.keras.datasets.cifar10.load_data()
+    # print('Images Shape: {}'.format(train_images.shape))
+    # print('Labels Shape: {}'.format(train_labels.shape))
+    # idx = (train_labels == 6).reshape(train_images.shape[0])
+    # print('Index Shape: {}'.format(idx.shape))
+    # filtered_images = train_images[idx]
+    # print('Filtered Images Shape: {}'.format(filtered_images.shape))
 
     ground_truth = y_train[i]
+    print('ground truth {}'.format(ground_truth.shape))
     data = x_train[i]
+    print('data {}'.format(data.shape))
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
