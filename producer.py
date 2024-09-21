@@ -47,8 +47,8 @@ for i in range (100):
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    ground_truth = int(y_train[i][0])
-    data = x_train[i].tolist()
+    ground_truth = y_train[i]
+    data = x_train[i]
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
@@ -60,14 +60,14 @@ for i in range (100):
         "Data": data
     }
 
-    str_image = json.dumps(image).encode('ascii')
+    str_image = json.dumps(image)
 
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #
-    producer.send ("images", value=str_image)
+    producer.send ("images", value=bytes (str_image, 'ascii'))
     producer.flush ()   # try to empty the sending buffer
 
     # sleep a second
