@@ -22,9 +22,8 @@ import tensorflow as tf
 import pandas as pd 
 import numpy as np
 from tensorflow.keras import layers, models
-import matplotlib.pyplot as plt
 
-from kafka import KafkaProducer  # producer of events
+#from kafka import KafkaProducer  # producer of events
 
 # We can make this more sophisticated/elegant but for now it is just
 # hardcoded to the setup I have on my local VMs
@@ -39,7 +38,7 @@ from kafka import KafkaProducer  # producer of events
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
 # say we send the contents 100 times after a sleep of 1 sec in between
-for i in range (100):
+for i in range (1): ##################TODO#################################TODO##################################change back to 100
     
     # get the output of the top command
     process = os.popen ("top -n 1 -b")
