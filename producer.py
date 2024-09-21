@@ -23,7 +23,6 @@ import random # for random
 import tensorflow as tf 
 import pandas as pd 
 import numpy as np
-from tensorflow.keras import layers, models
 
 #from kafka import KafkaProducer  # producer of events
 
