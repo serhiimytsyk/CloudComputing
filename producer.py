@@ -47,8 +47,8 @@ for i in range (100):
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    ground_truth = str(y_train[i])
-    data = list(x_train[i])
+    ground_truth = y_train[i]
+    data = x_train[i]
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
@@ -60,7 +60,7 @@ for i in range (100):
         "Data": data
     }
 
-    str_image = json.dumps(image)
+    str_image = json.dump(image)
 
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
