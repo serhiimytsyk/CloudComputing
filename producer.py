@@ -31,7 +31,7 @@ from kafka import KafkaProducer  # producer of events
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-producer = KafkaProducer (bootstrap_servers="192.168.5.97:9093", 
+producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
                                           acks=1)  # wait for leader to write to log
 
 # acquire the CIFAR10 dataset
