@@ -48,7 +48,7 @@ for i in range (1): ##################TODO#################################TODO#
 
     ground_truth = y_train[i][0]
     #print('ground truth {}'.format(ground_truth.shape))
-    data = x_train[i]
+    data = x_train[i].tolist()
     #print('data {}'.format(data.shape))
 
     # send the contents under topic "images". Note that it expects
