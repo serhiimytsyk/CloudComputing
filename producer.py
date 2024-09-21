@@ -38,7 +38,7 @@ from tensorflow.keras import layers, models
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
 # say we send the contents 100 times after a sleep of 1 sec in between
-for i in range (1): ##################TODO#################################TODO##################################change back to 100
+for i in range (10): ##################TODO#################################TODO##################################change back to 100
     
     # get the output of the top command
     process = os.popen ("top -n 1 -b")
