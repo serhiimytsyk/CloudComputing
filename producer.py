@@ -60,14 +60,14 @@ for i in range (100):
         "Data": data
     }
 
-    str_image = json.dumps(image)
+    str_image = bytes(json.dumps(image), 'ascii')
 
     # Note that here I am not serializing the contents into JSON or anything
     # as such but just taking the output as received and sending it as bytes
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #
-    producer.send ("images", value=bytes (str_image, 'ascii'))
+    producer.send ("images", value=str_image)
     producer.flush ()   # try to empty the sending buffer
 
     # sleep a second
