@@ -47,9 +47,9 @@ for i in range (1): ##################TODO#################################TODO#
     contents = process.read ()
 
     ground_truth = int(y_train[i])
-    print('ground truth {}'.format(ground_truth.shape))
+    #print('ground truth {}'.format(ground_truth.shape))
     data = x_train[i]
-    print('data {}'.format(data.shape))
+    #print('data {}'.format(data.shape))
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
