@@ -49,7 +49,7 @@ for i in range (10): ##################TODO#################################TODO
     contents = process.read ()
 
     # randomize image
-    index = random.randint(0, 59999)
+    index = random.randint(0, 49999)
 
     # blur the images
     x_train, x_test = x_train / 255.0, x_test / 255.0
