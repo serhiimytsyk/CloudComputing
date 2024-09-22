@@ -39,7 +39,7 @@ import numpy as np
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
-x_train, x_test = x_train / 255.0, x_test / 255.0
+#x_train, x_test = x_train / 255.0, x_test / 255.0
 
 def blur_image(image):
     image = np.uint8(image * 255)
