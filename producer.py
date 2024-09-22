@@ -62,7 +62,7 @@ for i in range (10): ##################TODO#################################TODO
     ground_truth = int(y_train[index][0])
 
     # blur image
-    blurred_image = blur_image(x_train[index]).tolist()
+    blurred_image = (x_train[index]).tolist()
 
     sharpness_original = cv2.Laplacian(np.uint8(x_train[index] * 255), cv2.CV_64F).var()
     sharpness_blurred = cv2.Laplacian(np.uint8(blurred_image * 255), cv2.CV_64F).var()
