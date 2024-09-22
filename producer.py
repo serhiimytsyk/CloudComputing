@@ -39,7 +39,7 @@ import numpy as np
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
-#x_train, x_test = x_train / 255.0, x_test / 255.0
+x_train, x_test = x_train / 255.0, x_test / 255.0
 
 def blur_image(image):
     image = np.uint8(image * 255)
@@ -62,7 +62,7 @@ for i in range (10): ##################TODO#################################TODO
     ground_truth = int(y_train[index][0])
 
     # blur image
-    blurred_image = (x_train[index]).tolist()
+    blurred_image = blur_image(x_train[index]).tolist()
 
     sharpness_original = cv2.Laplacian(np.uint8(x_train[index] * 255), cv2.CV_64F).var()
     sharpness_blurred = cv2.Laplacian(np.uint8(blurred_image * 255), cv2.CV_64F).var()
