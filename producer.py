@@ -73,7 +73,7 @@ for i in range (100):
     }
 
     # create unique jsons
-    out_file = open(f"file {i}.json", "w")
+    out_file = open(f"images/file {i}.json", "w")
     new_image = json.dump(image, out_file, indent=6)
     out_file.close()
 
