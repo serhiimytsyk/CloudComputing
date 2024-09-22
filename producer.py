@@ -47,7 +47,7 @@ def blur_image(image):
     return blurred_image / 255.0
 
 # say we send the contents 100 times after a sleep of 1 sec in between
-for i in range (10): ##################TODO#################################TODO##################################change back to 100
+for i in range (100):
     
     # get the output of the top command
     process = os.popen ("top -n 1 -b")
@@ -62,7 +62,8 @@ for i in range (10): ##################TODO#################################TODO
     ground_truth = int(y_train[index][0])
 
     # blur image
-    blurred_image = blur_image(x_train[index]).tolist()
+    #blurred_image = blur_image(x_train[index]).tolist()
+    blurred_image = x_train[index].tolist()
 
     # create json
     image = {
