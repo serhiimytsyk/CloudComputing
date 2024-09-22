@@ -64,18 +64,6 @@ for i in range (10): ##################TODO#################################TODO
     # blur image
     blurred_image = blur_image(x_train[index]).tolist()
 
-    sharpness_original = cv2.Laplacian(np.uint8(x_train[index] * 255), cv2.CV_64F).var()
-    sharpness_blurred = cv2.Laplacian(np.uint8(blurred_image * 255), cv2.CV_64F).var()
-
-    print(f"Sharpness of original image: {sharpness_original}")
-    print(f"Sharpness of blurred image: {sharpness_blurred}")
-       
-    # Check if the blurred image is less sharp
-    if sharpness_blurred < sharpness_original:
-        print("The image has been blurred successfully.")
-    else:
-        print("The image does not appear to be blurred.")
-
     # create json
     image = {
         "ID": index,
