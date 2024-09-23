@@ -61,8 +61,8 @@ for i in range (100):
     ground_truth = int(y_train[index][0])
 
     # blur image
-    #blurred_image = blur_image(x_train[index]).tolist()
-    blurred_image = x_train[index].tolist()
+    blurred_image = blur_image(x_train[index]).tolist()
+    #blurred_image = x_train[index].tolist()
 
     # create json
     image = { ############################### make sure the DB can read this data
