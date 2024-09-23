@@ -32,9 +32,8 @@ import numpy as np
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-#producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
-                                          #acks=1,
-                                          #api_version=(0, 10, 1))  # wait for leader to write to log
+producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
+                                          acks=1,)  # wait for leader to write to log
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
@@ -66,16 +65,18 @@ for i in range (100):
     blurred_image = x_train[index].tolist()
 
     # create json
-    image = {
+    image = { ############################### make sure the DB can read this data
         "ID": index,
         "GroundTruth": ground_truth,
         "Data": blurred_image
     }
 
     # create unique jsons
-    out_file = open(f"images/file {i}.json", "w")
-    new_image = json.dump(image, out_file, indent=6)
-    out_file.close()
+    #out_file = open(f"images/file {i}.json", "w")
+    #new_image = json.dump(image, out_file, indent=6)
+    #out_file.close()
+
+    new_image = json.dumps(image)
 
     # send the contents under topic "images". Note that it expects
     # the contents in bytes so we convert it to bytes.
@@ -86,11 +87,14 @@ for i in range (100):
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #   
-    #producer.send ("images", value=new_image)
-    #producer.flush ()   # try to empty the sending buffer
+    producer.send ("images", value=new_image)
+    producer.flush ()   # try to empty the sending buffer
+
+    #print image.json
+    #check logs on broker
 
     # sleep a second
     time.sleep (1)
 
 # we are done
-#producer.close ()
+producer.close ()
