@@ -9,3 +9,4 @@ CIFAR Dependencies/Install Commands:
 - sudo pip install numpy
 - sudo pip install pandas
 - sudo pip install opencv-python
+- sudo pip install kafka
