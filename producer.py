@@ -55,19 +55,16 @@ for i in range (100):
     # read the contents that we wish to send as topic content
     contents = process.read ()
 
-    # randomize image
-    index = random.randint(0, 49999)
-
     # get ground truth and data variables in JSON serializable formats
-    ground_truth = int(y_train[index][0])
+    ground_truth = int(y_train[i][0])
 
     # blur image
-    blurred_image = blur_image(x_train[index]).tolist()
-    #blurred_image = x_train[index].tolist()
+    blurred_image = blur_image(x_train[i]).tolist()
+    #blurred_image = x_train[i].tolist()
 
     # create json
     image = { ############################### make sure the DB can read this data
-        "ID": index,
+        "ID": i,
         "GroundTruth": ground_truth,
         "Data": blurred_image
     }
