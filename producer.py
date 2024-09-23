@@ -25,7 +25,7 @@ import tensorflow as tf
 import pandas as pd 
 import numpy as np
 
-#from kafka import KafkaProducer  # producer of events
+from kafka import KafkaProducer  # producer of events
 
 # We can make this more sophisticated/elegant but for now it is just
 # hardcoded to the setup I have on my local VMs
