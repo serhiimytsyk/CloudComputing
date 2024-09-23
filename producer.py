@@ -88,7 +88,7 @@ for i in range (100):
     # You will need to modify it to send a JSON structure, say something
     # like <timestamp, contents of top>
     #   
-    producer.send ("images", value=new_image)
+    producer.send ("images", value=new_image.encode('utf-8'))
     producer.flush ()   # try to empty the sending buffer
 
     #print image.json
