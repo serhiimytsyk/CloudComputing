@@ -33,7 +33,8 @@ from kafka import KafkaProducer  # producer of events
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
 producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
-                                          acks=1,)  # wait for leader to write to log
+                                          acks=1,
+                                          api_version=(0,11,5))  # wait for leader to write to log
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
