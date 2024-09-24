@@ -34,7 +34,7 @@ def create_cifar10_model():
     return model
 
 model = create_cifar10_model()
-model.fit(x_train, y_train, epochs=2, batch_size=64, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=1, batch_size=64, validation_data=(x_test, y_test))
 model.save_weights('cifar10_model.weights.h5')
 test_loss, test_accuracy = model.evaluate(x_test, y_test)
 print(f"Test accuracy: {test_accuracy:.4f}")
@@ -50,7 +50,7 @@ for msg in consumer:
     data = np.array(req['Data'], dtype=np.float32)
     data = np.expand_dims(data, axis=0)
     outputs = model.predict(data)
-    prediction = np.argmax(outputs, axis=1)
+    prediction = np.argmax(outputs, axis=1)[0]
     print('predicted:', prediction, '    actual:', req['GroundTruth'])
     doc = {'ID': req['ID'], 'prediction': prediction}
     producer.send("prediction", value = json.dumps(doc).encode('utf-8'))
