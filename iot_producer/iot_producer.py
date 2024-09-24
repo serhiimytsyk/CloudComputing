@@ -47,51 +47,52 @@ def blur_image(image):
     return blurred_image / 255.0
 
 # say we send the contents 100 times after a sleep of 1 sec in between
-for i in range (100):
+if __name__ == "__main__":
+    for i in range (100):
     
-    # get the output of the top command
-    process = os.popen ("top -n 1 -b")
+        # get the output of the top command
+        process = os.popen ("top -n 1 -b")
 
-    # read the contents that we wish to send as topic content
-    contents = process.read ()
+        # read the contents that we wish to send as topic content
+        contents = process.read ()
 
-    # get ground truth and data variables in JSON serializable formats
-    ground_truth = int(y_train[i][0])
+        # get ground truth and data variables in JSON serializable formats
+        ground_truth = int(y_train[i][0])
 
-    # blur image
-    blurred_image = blur_image(x_train[i]).tolist()
+        # blur image
+        blurred_image = blur_image(x_train[i]).tolist()
 
-    # create json
-    image = { ############################### make sure the DB can read this data
-        "ID": i,
-        "GroundTruth": ground_truth,
-        "Data": blurred_image
-    }
+        # create json
+        image = { ############################### make sure the DB can read this data
+            "ID": i,
+            "GroundTruth": ground_truth,
+            "Data": blurred_image
+        }
 
-    # create unique jsons
-    #out_file = open(f"images/file {i}.json", "w")
-    #new_image = json.dump(image, out_file, indent=6)
-    #out_file.close()
+        # create unique jsons
+        #out_file = open(f"images/file {i}.json", "w")
+        #new_image = json.dump(image, out_file, indent=6)
+        #out_file.close()
 
-    new_image = json.dumps(image)
+        new_image = json.dumps(image)
 
-    # send the contents under topic "images". Note that it expects
-    # the contents in bytes so we convert it to bytes.
-    #
+        # send the contents under topic "images". Note that it expects
+        # the contents in bytes so we convert it to bytes.
+        #
 
-    # Note that here I am not serializing the contents into JSON or anything
-    # as such but just taking the output as received and sending it as bytes
-    # You will need to modify it to send a JSON structure, say something
-    # like <timestamp, contents of top>
-    #   
-    producer.send ("images", value=new_image.encode('utf-8'))
-    producer.flush ()   # try to empty the sending buffer
+        # Note that here I am not serializing the contents into JSON or anything
+        # as such but just taking the output as received and sending it as bytes
+        # You will need to modify it to send a JSON structure, say something
+        # like <timestamp, contents of top>
+        #   
+        producer.send ("images", value=new_image.encode('utf-8'))
+        producer.flush ()   # try to empty the sending buffer
 
-    #print image.json
-    #check logs on broker
+        #print image.json
+        #check logs on broker
 
-    # sleep a second
-    time.sleep (1)
+        # sleep a second
+        time.sleep (1)
 
-# we are done
-producer.close ()
+    # we are done
+    producer.close ()
