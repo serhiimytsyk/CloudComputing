@@ -34,7 +34,7 @@ def create_cifar10_model():
     return model
 
 model = create_cifar10_model()
-model.fit(x_train, y_train, epochs=1, batch_size=64, validation_data=(x_test, y_test))
+model.fit(x_train, y_train, epochs=20, batch_size=64, validation_data=(x_test, y_test))
 model.save_weights('cifar10_model.weights.h5')
 test_loss, test_accuracy = model.evaluate(x_test, y_test)
 print(f"Test accuracy: {test_accuracy:.4f}")
