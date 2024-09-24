@@ -50,7 +50,7 @@ for msg in consumer:
     data = np.array(req['Data'], dtype=np.float32)
     data = np.expand_dims(data, axis=0)
     outputs = model.predict(data)
-    prediction = np.argmax(outputs, axis=1)[0]
+    prediction = int(np.argmax(outputs, axis=1)[0])
     print('predicted:', prediction, '    actual:', req['GroundTruth'])
     doc = {'ID': req['ID'], 'prediction': prediction}
     producer.send("prediction", value = json.dumps(doc).encode('utf-8'))
