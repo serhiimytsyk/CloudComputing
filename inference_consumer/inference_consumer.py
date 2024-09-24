@@ -46,7 +46,7 @@ consumer.subscribe(topics=["images"])
 producer = KafkaProducer(bootstrap_servers="192.168.5.97:9092", acks=1, api_version=(0,11,5))
 
 for msg in consumer:
-    req = json.load(msg.value.decode('utf-8'))
+    req = json.loads(msg.value.decode('utf-8'))
     data = np.array(req['Data'], dtype=np.float32)
     data = np.expand_dims(data, axis=0)
     outputs = model.predict(data)
