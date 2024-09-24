@@ -53,7 +53,7 @@ for msg in consumer:
     prediction = np.argmax(outputs, axis=1)
     print('predicted:', prediction, '    actual:', req['GroundTruth'])
     doc = {'ID': req['ID'], 'prediction': prediction, 'GroundTruth': req['GroundTruth'], 'Data' : req['Data']}
-    producer.send("prediction", value = doc.encode('utf-8'))
+    producer.send("prediction", value = json.dumps(doc).encode('utf-8'))
     producer.flush()
     time.sleep(1)
 
