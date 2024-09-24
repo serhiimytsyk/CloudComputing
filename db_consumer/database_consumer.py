@@ -1,9 +1,7 @@
+from time import sleep
 import requests
 import json
 from kafka import KafkaConsumer  # consumer of events
-consumer = KafkaConsumer (bootstrap_servers="localhost:9092")
-# consumer.subscribe (topics=["utilizations"])
-consumer.subscribe (topics=["images, prediction"])
 
 # CouchDB configuration
 db_ip = "127.0.0.1"
@@ -30,36 +28,58 @@ def create_database(db_name):
         print(f"Database '{db_name}' already exists.")
 
 # Function to insert a document
-def insert_document(db_name, doc, action = "post"):
+def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
     if action == "post":
         response = requests.post(f"{COUCHDB_URL}/{db_name}", json=doc, auth=(USERNAME, PASSWORD))
     else:
-        response = requests.put(f"{COUCHDB_URL}/{db_name}", json=doc, auth=(USERNAME, PASSWORD))
-
+        get_response = requests.get(f"{COUCHDB_URL}/{db_name}/{doc['_id']}", auth=(USERNAME, PASSWORD))
+        # if get_response.status_code == 200:
+        document: dict = get_response.json()
+        document.update(doc)
+        response = requests.put(f"{COUCHDB_URL}/{db_name}/{doc['_id']}", json=document, auth=(USERNAME, PASSWORD))
     if response.status_code in [201, 202]:
-        print(f"Document inserted: {response.json()}")
+        print(f"Document inserted successfully: {response.json()}")
     else:
-        print(f"Error inserting document: {response.json()}")
+        print(f"Error inserting document: {response.json()}", f"status code: {response.status_code}")
+
+def test_run(DB_NAME : str):
+    document = {
+        "_id": "test_id",
+        "name": "luka"    
+    }
+
+    insert_document(DB_NAME, document, action = "post")
+    sleep(1)
+    document["changed"] = "yes"
+    insert_document(DB_NAME, document, action = "put")
+    exit(0)
 
 # Main logic
 if __name__ == "__main__":
     DB_NAME = "images_database"
     create_database(DB_NAME)
 
-    for msg in consumer:
-        if msg.topic == "image":
-            document = json.load(msg.value.decode('utf-8'))
-            try:
-                document['_id'] = document["ID"]
-                del document["ID"]
-                insert_document(DB_NAME, document, action = "post")
-            except KeyError:
-                print("json object does not have _id key.")
-        elif msg.topic == "prediction":
-            document = json.load(msg.value.decode('utf-8'))
-            try:
-                document['_id'] = document["ID"]
-                del document["ID"]
-                insert_document(DB_NAME, document, action = "put")
-            except KeyError:
-                print("json object does not have _id key.")
+    test = True
+    if test:
+        test_run(DB_NAME)
+    else:
+        consumer = KafkaConsumer (bootstrap_servers="192.168.5.97:9092")
+        consumer.subscribe (topics=["utilizations"])
+        consumer.subscribe (topics=["images", "prediction"])
+        for msg in consumer:
+            if msg.topic == "images":
+                document = json.loads(msg.value.decode('utf-8'))
+                try:
+                    document['_id'] = str(document["ID"])
+                    del document["ID"]
+                    insert_document(DB_NAME, document, action = "post")
+                except KeyError:
+                    print("json object does not have _id key.")
+            elif msg.topic == "prediction":
+                document = json.loads(msg.value.decode('utf-8'))
+                try:
+                    document['_id'] = str(document["ID"])
+                    del document["ID"]
+                    insert_document(DB_NAME, document, action = "put")
+                except KeyError:
+                    print("json object does not have _id key.")
