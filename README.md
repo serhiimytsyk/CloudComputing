@@ -19,3 +19,8 @@ Producer side commands:
 5. On vm1-3, run bin/kafka-topics.sh --create --topic images --bootstrap-server 192.168.5.97:9092
 6. On vm1-3, run bin/kafka-topics.sh --create --topic prediction --bootstrap-server 192.168.5.97:9092
 7. On vm2, run python3 iot_producer/iot_producer.py (leave running)
+
+Consumer side commands:
+1. run python3 '/home/cc/PA1/db_consumer/database_consumer.py'
+It will start listening to the "images" and "prediction" topics from kafka broker and insert/update entries in couchDB 
+database based on received json objects.

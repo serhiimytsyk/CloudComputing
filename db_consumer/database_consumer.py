@@ -37,49 +37,33 @@ def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
         document: dict = get_response.json()
         document.update(doc)
         response = requests.put(f"{COUCHDB_URL}/{db_name}/{doc['_id']}", json=document, auth=(USERNAME, PASSWORD))
+    
     if response.status_code in [201, 202]:
         print(f"Document inserted successfully: {response.json()}")
     else:
         print(f"Error inserting document: {response.json()}", f"status code: {response.status_code}")
-
-def test_run(DB_NAME : str):
-    document = {
-        "_id": "test_id",
-        "name": "luka"    
-    }
-
-    insert_document(DB_NAME, document, action = "post")
-    sleep(1)
-    document["changed"] = "yes"
-    insert_document(DB_NAME, document, action = "put")
-    exit(0)
 
 # Main logic
 if __name__ == "__main__":
     DB_NAME = "images_database"
     create_database(DB_NAME)
 
-    test = True
-    if test:
-        test_run(DB_NAME)
-    else:
-        consumer = KafkaConsumer (bootstrap_servers="192.168.5.97:9092")
-        consumer.subscribe (topics=["utilizations"])
-        consumer.subscribe (topics=["images", "prediction"])
-        for msg in consumer:
-            if msg.topic == "images":
-                document = json.loads(msg.value.decode('utf-8'))
-                try:
-                    document['_id'] = str(document["ID"])
-                    del document["ID"]
-                    insert_document(DB_NAME, document, action = "post")
-                except KeyError:
-                    print("json object does not have _id key.")
-            elif msg.topic == "prediction":
-                document = json.loads(msg.value.decode('utf-8'))
-                try:
-                    document['_id'] = str(document["ID"])
-                    del document["ID"]
-                    insert_document(DB_NAME, document, action = "put")
-                except KeyError:
-                    print("json object does not have _id key.")
+    consumer = KafkaConsumer (bootstrap_servers="192.168.5.97:9092")
+    consumer.subscribe(topics=["images", "prediction"])
+    for msg in consumer:
+        if msg.topic == "images":
+            document = json.loads(msg.value.decode('utf-8'))
+            try:
+                document['_id'] = str(document["ID"])
+                del document["ID"]
+                insert_document(DB_NAME, document, action = "post")
+            except KeyError:
+                print("json object does not have _id key.")
+        elif msg.topic == "prediction":
+            document = json.loads(msg.value.decode('utf-8'))
+            try:
+                document['_id'] = str(document["ID"])
+                del document["ID"]
+                insert_document(DB_NAME, document, action = "put")
+            except KeyError:
+                print("json object does not have _id key.")
