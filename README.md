@@ -10,3 +10,12 @@ CIFAR Dependencies/Install Commands:
 - sudo pip install pandas
 - sudo pip install opencv-python
 - sudo pip install kafka
+
+Producer side commands:
+1. On one terminal window, run ssh vm2
+2. On three other terminal windows, run ssh vm1
+3. On vm1-1, run bin/zookeeper-server-start.sh config/zookeeper.properties (leave running)
+4. On vm1-2, run bin/kafka-server-start.sh config/server.properties (leave running)
+5. On vm1-3, run bin/kafka-topics.sh --create --topic images --bootstrap-server 192.168.5.97:9092
+6. On vm1-3, run bin/kafka-topics.sh --create --topic prediction --bootstrap-server 192.168.5.97:9092
+7. On vm2, run python3 iot_producer/iot_producer.py (leave running)
