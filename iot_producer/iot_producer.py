@@ -63,7 +63,7 @@ if __name__ == "__main__":
         blurred_image = blur_image(x_train[i]).tolist()
 
         # create json
-        image = { ############################### make sure the DB can read this data
+        image = {
             "ID": i,
             "GroundTruth": ground_truth,
             "Data": blurred_image
@@ -87,9 +87,6 @@ if __name__ == "__main__":
         #   
         producer.send ("images", value=new_image.encode('utf-8'))
         producer.flush ()   # try to empty the sending buffer
-
-        #print image.json
-        #check logs on broker
 
         # sleep a second
         time.sleep (1)
