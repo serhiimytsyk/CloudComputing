@@ -1,0 +1,42 @@
+---
+  - name: Check local_user
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'local_user'"
+    when: local_user is undefined
+
+  - name: Check cloud_user
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'cloud_user'"
+    when: cloud_user is undefined
+
+  - name: Check vm_prefix
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'vm_prefix'"
+    when: vm_prefix is undefined
+
+  - name: Check vm_flavor
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'vm_flavor'"
+    when: vm_flavor is undefined
+
+  - name: Check id
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'id'"
+    when: id is undefined
+
+  - name: Check project_number
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'project_number'"
+    when: project_number is undefined
+
+  - name: Check network_name
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'network_name'"
+    when: network_name is undefined
+
+  - name: Check key
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'key'"
+    when: key is undefined
+
+  - name: Check public_key
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'public_key'"
+    when: public_key is undefined
+
+  - name: Check auto_ip
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'auto_ip'"
+    when: auto_ip is undefined
+
+...
