@@ -1,0 +1,18 @@
+---
+#
+# Author: Aniruddha Gokhale
+# CS4287/5287 Principles of Cloud Computing
+# Created: Fall 2024
+#
+# Purpose: 
+#   This playbook can be used if you would like to try doing
+#   the actions from the master playbook step by step. Simply
+#   copy the next play from the master to here and execute
+#   just this play and make sure it is working. If everything
+#   works correctly, you may then terminate your VMs once again
+#   and just run the master playbook end to end
+#
+
+
+...
+
