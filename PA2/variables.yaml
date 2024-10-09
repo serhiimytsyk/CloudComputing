@@ -22,7 +22,7 @@ cloud_user: cc  # user on chameleon VMs is cc
 #    m1.medium, project number and all the things you need to
 #    create the VM.
 # @@
-vm_prefix: "Team17-test"
+vm_prefix: "Team17-"
 
 image_name: "CC-Ubuntu22.04"
 
@@ -32,7 +32,7 @@ vm_flavor: "m1.medium"
 
 network_name: "CH-822922-net"
 
-key: "foo"
+key: "team17-keypair"
 
 auto_ip: false
 

@@ -6,12 +6,12 @@
         - default
         - ENABLE_SSH
         - ENABLE_ZOOKEEPER
-      name: "Team17-1"
-      image: "CC-Ubuntu22.04"
-      flavor: "m1.medium"
-      availability_zone: "nova"
-      key_name: "team17-keypair"
-      network: "CH-822922-net"
+      name: "{{ vm_prefix }}"
+      image: "{{ image_name }}"
+      flavor: "{{ vm_flavor }}"
+      availability_zone: "{{ availability_zone }}"
+      key_name: "{{ key }}"
+      network: "{{ network_name }}"
       auto_ip: false
-      cloud: "CH-822922"
+      cloud: "{{ cloud_name }}"
 ...
