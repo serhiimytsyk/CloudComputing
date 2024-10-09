@@ -63,7 +63,7 @@
   hosts: LocalMC  # specified in the Inventory file
   remote_user:  "{{ local_user }}"
 
-  gather_facts: no
+  gather_facts: yes
   become: false
   collections:
   - ansible-base
