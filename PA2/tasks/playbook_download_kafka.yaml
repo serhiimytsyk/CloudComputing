@@ -4,6 +4,11 @@
         url: 'https://downloads.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz'
         dest: /tmp
 
+  - name: Creates directory for apps
+    ansible.builtin.file:
+      path: /Apps
+      state: directory
+
 
   - name: Unpack Kafka
     ansible.builtin.unarchive:
