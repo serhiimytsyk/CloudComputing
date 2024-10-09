@@ -1,0 +1,13 @@
+---
+  - name: Download Kafka
+    ansible.builtin.get_url:
+        url: 'https://downloads.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz'
+        dest: /tmp
+        validate_certs: '{{ kafka_download_validate_certs }}'
+
+
+  - name: Unpack Kafka
+    ansible.builtin.unarchive:
+        src: /tmp/kafka_2.13-3.6.2.tgz
+        dest: '/Apps'
+        copy: no
