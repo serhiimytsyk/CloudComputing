@@ -1,0 +1,37 @@
+---
+- name: Install Kafka and Zookeeper for Pub/Sub
+  hosts: localhost
+  become: yes
+  tasks:
+    # Update apt repository and cache
+    - name: Update apt packages
+      apt:
+        update_cache: yes
+
+    # Install Java as it's a Kafka dependency
+    - name: Install Java (Kafka dependency)
+      apt:
+        name: openjdk-11-jre
+        state: present
+
+    # Install Kafka and Zookeeper
+    - name: Install Kafka and Zookeeper
+      apt:
+        name:
+          - kafka
+          - zookeeper
+        state: present
+
+    # Enable and start Zookeeper service
+    - name: Ensure Zookeeper is running
+      systemd:
+        name: zookeeper
+        enabled: yes
+        state: started
+
+    # Enable and start Kafka service
+    - name: Ensure Kafka is running
+      systemd:
+        name: kafka
+        enabled: yes
+        state: started
