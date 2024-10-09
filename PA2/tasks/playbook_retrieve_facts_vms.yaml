@@ -5,18 +5,13 @@
     server: "Team17*"
   register: result
 
-- name: Collect private IP addresses
-  set_fact:
-    private_ips: "{{ private_ips | default([]) + [item.addresses['CH-822922-net'][0].addr] }}"
+- name: Update Inventory with private IP addresses
+  lineinfile:
+    path: Inventory
+    line: "{{ item.addresses['CH-822922-net'][0].addr }}"
+    state: present
+    insertafter: '[CloudVMs]'
   loop: "{{ result.servers }}"
   when: item.addresses is defined and 'CH-822922-net' in item.addresses
 
-- name: Update Inventory with private IPs
-  lineinfile:
-    path: Inventory
-    line: "{{ item }}"
-    state: present
-    insertafter: '[CloudVMs]'
-  loop: "{{ private_ips }}"
-  
 ...
