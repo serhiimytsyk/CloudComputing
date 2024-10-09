@@ -61,7 +61,7 @@
 #####################################################
 - name: "Play 3: Perform fact gathering on all Cloud VMs"
   hosts: LocalMC  # specified in the Inventory file
-  remote_user:  "{{ cloud_user }}"
+  remote_user:  "{{ local_user }}"
 
   gather_facts: yes
   become: false
