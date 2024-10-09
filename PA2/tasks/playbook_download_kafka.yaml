@@ -8,6 +8,7 @@
     ansible.builtin.file:
       path: /Apps
       state: directory
+    become: yes
 
 
   - name: Unpack Kafka
@@ -15,3 +16,4 @@
         src: /tmp/kafka_2.13-3.6.2.tgz
         dest: '/Apps'
         copy: no
+      become: yes
