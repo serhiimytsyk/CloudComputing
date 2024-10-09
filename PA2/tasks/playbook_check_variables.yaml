@@ -11,13 +11,21 @@
     ansible.builtin.fail: msg="Bailing out. This play is missing 'vm_prefix'"
     when: vm_prefix is undefined
 
+  - name: Check image_name
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'image_name'"
+    when: image_name is undefined
+
+  - name: Check availability_zone
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'availability_zone'"
+    when: availability_zone is undefined
+
   - name: Check vm_flavor
     ansible.builtin.fail: msg="Bailing out. This play is missing 'vm_flavor'"
     when: vm_flavor is undefined
 
-  - name: Check id
-    ansible.builtin.fail: msg="Bailing out. This play is missing 'id'"
-    when: id is undefined
+  - name: Check network_id
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'network_id'"
+    when: network_id is undefined
 
   - name: Check project_number
     ansible.builtin.fail: msg="Bailing out. This play is missing 'project_number'"
@@ -38,5 +46,9 @@
   - name: Check auto_ip
     ansible.builtin.fail: msg="Bailing out. This play is missing 'auto_ip'"
     when: auto_ip is undefined
+
+  - name: Check cloud_name
+    ansible.builtin.fail: msg="Bailing out. This play is missing 'cloud_name'"
+    when: cloud_name is undefined
 
 ...

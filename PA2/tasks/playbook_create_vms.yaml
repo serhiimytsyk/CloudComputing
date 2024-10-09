@@ -1,0 +1,12 @@
+---
+  - name: Create a VM
+    openstack.cloud.server:
+      name: "{{ vm_prefix }}"
+      image: "{{ image_name }}"
+      flavor: "{{ vm_flavor }}"
+      availability_zone: "{{ availability_zone }}"
+      key: "{{ key }}"
+      network: "{{ network_name }}"
+      auto_ip: "{{ auto_ip }}"
+      cloud: "{{ cloud_name }}"
+...

@@ -12,7 +12,7 @@
 # I have already defined these two variables, which are used
 # in the master playbook.
 # @@ make sure to add the local user's username @@
-local_user: <add the user name of the user from where this master is invoked>
+local_user: hajinsuh
 
 cloud_user: cc  # user on chameleon VMs is cc
 
@@ -22,11 +22,15 @@ cloud_user: cc  # user on chameleon VMs is cc
 #    m1.medium, project number and all the things you need to
 #    create the VM.
 # @@
-vm_prefix: "Team17"
+vm_prefix: "Team17-test"
+
+image_name: "CC-Ubuntu22.04"
+
+availability_zone: "nova"
 
 vm_flavor: "m1.medium"
 
-id: "b419e95b-944a-4eb4-a4ea-6259cb34e667"
+network_id: "b419e95b-944a-4eb4-a4ea-6259cb34e667"
 
 project_number: "9c3848cc69044cdfb5a8c7b5e273b276"
 
@@ -37,5 +41,7 @@ key: "foo"
 public_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjLs+KFD7WJ2GqhG6SRdcvls/l+w9i+tvhE3o3co5JmmGO1B2zxCfoq7AaWYXGMrL6JPTCnEndBgt9uWfzg+HqKBjYSGDzyWjmiFfvGlZfxEMAetfMptJ+/0EsD8ZVO/v9hWVqD9jlQncIYnl0LUXG0zptfMaOW2SMUMazNWPMK1iCL8KlIa5FmoQAP5YFDoQU/FunpAe0P02DrupG1gnMaDhhL8VdTmN30dva3Km3q+tvOOBhZSjiwXgrfQmb5uLKkKX6qgn4BR6zpLGbeRWF82HtvGtE/CN0xd0ldR8RAMAykg3OEIdv5ItJiWDDHBoeW5HmOVnGNm2d3VvMo9ft Generated-by-Nova"
 
 auto_ip: false
+
+cloud_name: "CH-822922"
 
 ...
