@@ -23,14 +23,6 @@
     ansible.builtin.fail: msg="Bailing out. This play is missing 'vm_flavor'"
     when: vm_flavor is undefined
 
-  - name: Check network_id
-    ansible.builtin.fail: msg="Bailing out. This play is missing 'network_id'"
-    when: network_id is undefined
-
-  - name: Check project_number
-    ansible.builtin.fail: msg="Bailing out. This play is missing 'project_number'"
-    when: project_number is undefined
-
   - name: Check network_name
     ansible.builtin.fail: msg="Bailing out. This play is missing 'network_name'"
     when: network_name is undefined
@@ -38,10 +30,6 @@
   - name: Check key
     ansible.builtin.fail: msg="Bailing out. This play is missing 'key'"
     when: key is undefined
-
-  - name: Check public_key
-    ansible.builtin.fail: msg="Bailing out. This play is missing 'public_key'"
-    when: public_key is undefined
 
   - name: Check auto_ip
     ansible.builtin.fail: msg="Bailing out. This play is missing 'auto_ip'"

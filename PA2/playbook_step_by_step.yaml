@@ -13,6 +13,72 @@
 #   and just run the master playbook end to end
 #
 
+- name: "Check if required variables that drive the deployment are defined"
+  hosts: LocalMC   # this alias is specified in the inventory file
+  vars_files: variables.yaml
+  remote_user:  "hajinsuh"  # since the play executes on LocalMC,
+                                    # we use the local user
+  gather_facts: no
+  collections:    # collections is like import the necessary Ansible
+                  # galaxy packages needed for the play to execute
+  - ansible-base
 
+  tasks:
+  # @@ You have to write the following child playbook @@
+  - import_tasks: tasks/playbook_check_variables.yaml
+
+- name: "Play 2: Create VMs on Chameleon"
+  hosts: LocalMC   # this alias is specified in the Inventory file
+  remote_user:  "hajinsuh" 
+  gather_facts: no
+  become: false    # No need for sudo as we are not installing anything
+  collections:
+  - ansible-base
+  - openstack.cloud.collection
+  
+  tasks:    # the task to be performed
+  # @@ You have to write the following child playbook @@
+  - import_tasks: tasks/playbook_create_vms.yaml
+  
+- name: "Play 4 - Install various packages on Cloud VMs"
+  hosts: CloudVMs   # specified in the Inventory file
+  remote_user: "cc" # since this play operates on the cloud
+                                  # VMs, the user on those VMs is the
+                                  # cloud_user variable
+  become: true  # by setting this, we perform operations with sudo privilege
+  gather_facts: no
+  collections:
+  - ansible-base
+
+  tasks:    # the task to be performed
+  # @@ You have to write the following child playbooks @@
+  - import_tasks: tasks/playbook_install_apt_packages.yaml
+
+- name: "Play 5 - Install Docker on Cloud VMs"
+  hosts: CloudVMs   # specified in the Inventory file
+  remote_user: "cc" # since this play operates on the cloud
+                                  # VMs, the user on those VMs is the
+                                  # cloud_user variable
+  gather_facts: yes   # we will need to get variety of facts like arch, OS release
+  become: true  # we set it here instead of doing per task
+  collections:
+  - ansible-base
+
+  tasks:    # the task to be performed
+  - import_tasks: tasks/playbook_install_docker.yml
+
+
+- name: "Play 6a - Download kafka locally"
+  hosts: LocalMC  # specified in the Inventory file
+  remote_user:  "cc"      # note that the user is cc on Chameleon
+  gather_facts: no
+  become: false  # no need here.
+  collections:
+  - ansible-base
+
+  tasks:    # the task to be performed
+  # @@ You have to write the following child playbook @@
+  - import_tasks: tasks/playbook_download_kafka.yaml
+  
 ...
 
