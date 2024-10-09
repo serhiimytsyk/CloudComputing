@@ -1,4 +1,3 @@
----
 #
 # Author: Aniruddha Gokhale
 # CS4287/5287 Principles of Cloud Computing
@@ -14,14 +13,6 @@
 [LocalMC]
 127.0.0.1  ansible_connection=local
 
-
-[CloudVMs]
-# @@ Your playbook that retrieves IP addresses of the VMs should
-#    insert the 4 private IP addresses one per line here.
-#    If you add manually, then you cannot run the master playbook
-#    in one go.
-# @@
-
 [CloudVMs:vars]
 # @@
 #    Insert the path to your team's pem file on the controller machine for
@@ -34,8 +25,12 @@
 # @@
 ansible_user=cc
 ansible_connection=ssh
-ansible_ssh_private_key_file=<INSERT ABSOLUTE PATH TO YOUR TEAM's privatekey>
-ansible_ssh_common_args='-i <insert path to your F24_CS4287.pem> -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p cc@bastion"'
+ansible_ssh_private_key_file=/home/hajin/.ssh/team17.pem
+ansible_ssh_common_args='-i /home/hajin/.ssh/F24_BASTION.pem -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p cc@bastion"'
 
-
-
+[CloudVMs]
+# @@ Your playbook that retrieves IP addresses of the VMs should
+#    insert the 4 private IP addresses one per line here.
+#    If you add manually, then you cannot run the master playbook
+#    in one go.
+# @@
