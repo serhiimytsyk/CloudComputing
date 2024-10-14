@@ -1,15 +1,7 @@
 ---
-
-  - name: Copy Kafka to our VMs
-    ansible.builtin.copy:
-      src: tmp/kafka_2.13-3.6.2.tgz
-      dest: ~/tmp
-    become: yes
-
-
-  - name: Unpack Kafka
+  - name: Unpack Kafka from local to VM
     ansible.builtin.unarchive:
-        src: ~/tmp/kafka_2.13-3.6.2.tgz
+        src: tmp/kafka_2.13-3.6.2.tgz
         dest: '~/Apps'
         copy: no
     become: yes
