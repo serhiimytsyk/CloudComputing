@@ -3,6 +3,7 @@
     ansible.builtin.file:
       path: ~/Apps
       state: directory
+    become: yes
 
   - name: Unpack Kafka from local to VM
     ansible.builtin.unarchive:
