@@ -2,18 +2,4 @@
   - name: Download Kafka
     ansible.builtin.get_url:
         url: 'https://downloads.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz'
-        dest: ~/tmp
-
-  - name: Creates directory for apps
-    ansible.builtin.file:
-      path: ~/Apps
-      state: directory
-    become: yes
-
-
-  - name: Unpack Kafka
-    ansible.builtin.unarchive:
-        src: ~/tmp/kafka_2.13-3.6.2.tgz
-        dest: '~/Apps'
-        copy: no
-    become: yes
+        dest: tmp
