@@ -47,11 +47,11 @@ test_loss, test_accuracy = model.evaluate(x_test, y_test)
 print(f"Test accuracy: {test_accuracy:.4f}")
 
 
-consumer = KafkaConsumer(bootstrap_servers="192.168.5.97:9092")
+consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092")
 consumer.subscribe(topics=["images"])
 
 producer = KafkaProducer(
-    bootstrap_servers="192.168.5.97:9092", acks=1, api_version=(0, 11, 5))
+    bootstrap_servers="192.168.5.180:9092", acks=1, api_version=(0, 11, 5))
 
 for msg in consumer:
     req = json.loads(msg.value.decode('utf-8'))

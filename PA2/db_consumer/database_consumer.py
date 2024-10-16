@@ -53,7 +53,7 @@ if __name__ == "__main__":
     DB_NAME = "images_database"
     create_database(DB_NAME)
 
-    consumer = KafkaConsumer (bootstrap_servers="192.168.5.97:9092")
+    consumer = KafkaConsumer (bootstrap_servers="192.168.5.180:9092")
     consumer.subscribe(topics=["images", "prediction"])
     for msg in consumer:
         if msg.topic == "images":
