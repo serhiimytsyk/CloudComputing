@@ -1,6 +1,4 @@
 import json
-from kafka import KafkaConsumer
-from kafka import KafkaProducer
 from tensorflow.keras.datasets import cifar10
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
@@ -12,6 +10,8 @@ if sys.version_info >= (3, 12, 0):
     import six
     sys.modules['kafka.vendor.six.moves'] = six.moves
 
+from kafka import KafkaConsumer
+from kafka import KafkaProducer
 (x_train, y_train), (x_test, y_test) = cifar10.load_data()
 x_train = x_train.astype('float32') / 255.0
 x_test = x_test.astype('float32') / 255.0
