@@ -15,16 +15,20 @@
 #
 
 import os   # need this for popen
-import time # for sleep
-import json # for json conversion
-import sys # For command line arguments
+import time  # for sleep
+import json  # for json conversion
+import sys  # For command line arguments
 
-import random # for random
-import cv2 # for blur
-import threading # for two threads
+if sys.version_info >= (3, 12, 0):
+    import six
+    sys.modules['kafka.vendor.six.moves'] = six.moves
 
-import tensorflow as tf 
-import pandas as pd 
+import random  # for random
+import cv2  # for blur
+import threading  # for two threads
+
+import tensorflow as tf
+import pandas as pd
 import numpy as np
 
 from kafka import KafkaProducer  # producer of events
@@ -39,9 +43,9 @@ latencies = {}
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-producer = KafkaProducer (bootstrap_servers="192.168.5.97:9092", 
-                                          acks=1,
-                                          api_version=(0,11,5))  # wait for leader to write to log
+producer = KafkaProducer(bootstrap_servers="192.168.5.97:9092",
+                         acks=1,
+                         api_version=(0, 11, 5))  # wait for leader to write to log
 
 consumer = KafkaConsumer(bootstrap_servers="192.168.5.97:9092")
 
@@ -50,10 +54,12 @@ consumer = KafkaConsumer(bootstrap_servers="192.168.5.97:9092")
 
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
+
 def blur_image(image):
     image = np.uint8(image * 255)
     blurred_image = cv2.GaussianBlur(image, (5, 5), 0)
     return blurred_image / 255.0
+
 
 def produce():
     for i in range(total_images):
@@ -85,25 +91,28 @@ def produce():
     # we are done
     producer.close()
 
+
 def consume():
     consumer.subscribe(topics=["prediction"])
     images_left = total_images
     for msg in consumer:
         prediction = json.loads(msg.value.decode('utf-8'))
         prediction_id = str(prediction["ID"])
-        if prediction_id.startswith(producer_id + "_"): # Check if it is our image
+        # Check if it is our image
+        if prediction_id.startswith(producer_id + "_"):
             images_left -= 1
             # measure request end time in ms with plus sign
             latencies[prediction_id] += int(time.time() * 1000)
-            if images_left == 0: # There are no images left
+            if images_left == 0:  # There are no images left
                 break
     consumer.close()
+
 
 # say we send the contents 100 times after a sleep of 1 sec in between
 if __name__ == "__main__":
     # Create two threads
-    producer_thread = threading.Thread(target = produce)
-    consumer_thread = threading.Thread(target = consume)
+    producer_thread = threading.Thread(target=produce)
+    consumer_thread = threading.Thread(target=consume)
 
     # Start two threads
     producer_thread.start()
