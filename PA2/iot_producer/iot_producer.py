@@ -48,7 +48,6 @@ producer = KafkaProducer(bootstrap_servers="192.168.5.180:9092",
                          api_version=(0, 11, 5))  # wait for leader to write to log
 
 consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092",
-                         acks=1,
                          api_version=(0, 11, 5))
 
 # acquire the CIFAR10 dataset
