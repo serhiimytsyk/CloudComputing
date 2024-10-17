@@ -10,7 +10,7 @@ Host bastion
 
 Host vm1
    ProxyJump bastion
-   Hostname 192.168.5.97
+   Hostname 192.168.5.160
    User cc
    Port 22
    IdentityFile ~/PA/PA2/config/foo.pem
@@ -21,7 +21,7 @@ Host vm1
 
 Host vm2
    ProxyJump bastion
-   Hostname 192.168.5.31
+   Hostname 192.168.5.157
    User cc
    Port 22
    IdentityFile ~/PA/PA2/config/foo.pem
@@ -32,7 +32,7 @@ Host vm2
 
 Host vm3
    ProxyJump bastion
-   Hostname 192.168.5.183
+   Hostname 192.168.5.180
    User cc
    Port 22
    IdentityFile ~/PA/PA2/config/foo.pem
@@ -43,7 +43,7 @@ Host vm3
 
 Host vm4
    ProxyJump bastion
-   Hostname 192.168.5.12
+   Hostname 192.168.5.137
    User cc
    Port 22
    IdentityFile ~/PA/PA2/config/foo.pem

@@ -63,7 +63,6 @@ for msg in consumer:
     doc = {'ID': req['ID'], 'prediction': prediction}
     producer.send("prediction", value=json.dumps(doc).encode('utf-8'))
     producer.flush()
-    time.sleep(1)
 
 producer.close()
 consumer.close()
