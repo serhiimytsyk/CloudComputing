@@ -47,7 +47,9 @@ producer = KafkaProducer(bootstrap_servers="192.168.5.180:9092",
                          acks=1,
                          api_version=(0, 11, 5))  # wait for leader to write to log
 
-consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092")
+consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092",
+                         acks=1,
+                         api_version=(0, 11, 5))
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
