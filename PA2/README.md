@@ -1,3 +1,8 @@
+Ansible Playbook
+local machine or in virtual environment:
+cd PA1/PA2
+ansible-playbook -i Inventory -e "@variables.yaml" playbook_master.yaml
+
 Zookeeper & Kafka
 vm3:
 cd Apps/kafka_2.13-3.6.2 && bin/zookeeper-server-start.sh config/zookeeper.properties

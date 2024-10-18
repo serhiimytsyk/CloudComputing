@@ -8,9 +8,9 @@
 - name: Update Inventory with private IP addresses
   lineinfile:
     path: Inventory
-    line: "{{ item.addresses['CH-822922-net'][0].addr }}"
     state: present
-    insertafter: '[CloudVMs]'
+    insertafter: "# @@ inserthere"
+    line: "{{ item.addresses['CH-822922-net'][0].addr }} ansible_python_interpreter=/usr/bin/python3"
   loop: "{{ result.servers }}"
   when: item.addresses is defined and 'CH-822922-net' in item.addresses
 

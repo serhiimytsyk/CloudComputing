@@ -1,4 +1,15 @@
 ---
+  - name: Wait for CloudVMs to be defined
+    pause:
+      seconds: 5  # Wait for 5 seconds
+    register: wait_result
+    until: groups['CloudVMs'] | length == 4  # Wait until hosts are present
+    retries: 6  # Retry up to 6 times (30 seconds total)
+    
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
   - name: Install make
     apt: 
       name: make 

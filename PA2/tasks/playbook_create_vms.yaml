@@ -6,7 +6,7 @@
         - default
         - ENABLE_SSH
         - ENABLE_ZOOKEEPER
-      name: "{{ vm_prefix }}"
+      name: "{{ vm_prefix }}{{ item }}"
       image: "{{ image_name }}"
       flavor: "{{ vm_flavor }}"
       availability_zone: "{{ availability_zone }}"
@@ -14,4 +14,5 @@
       network: "{{ network_name }}"
       auto_ip: false
       cloud: "{{ cloud_name }}"
+    loop: "{{ range(1, 5) }}"
 ...

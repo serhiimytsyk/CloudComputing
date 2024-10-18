@@ -1,13 +1,12 @@
 ---
-
   - name: Creates tmp directory
     ansible.builtin.file:
       path: ~/tmp
       state: directory
-    become: yes
+    become: no
 
   - name: Download Kafka
     ansible.builtin.get_url:
         url: 'https://downloads.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz'
         dest: ~/tmp/kafka_2.13-3.6.2.tgz
-    become: yes
+    become: no

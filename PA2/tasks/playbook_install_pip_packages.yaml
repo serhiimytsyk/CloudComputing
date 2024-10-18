@@ -1,31 +1,38 @@
 ---
-# - name: Install Python pip (if not already installed)
-#   apt:
-#     name: python3-pip
-#     state: present
-#     update_cache: yes
+  - name: Install Python pip (if not already installed)
+    apt:
+      name: python3-pip
+      state: present
+      update_cache: yes
 
-- name: Install TensorFlow using pip
-  pip:
-    name: tensorflow
-    state: present
+  - name: Install TensorFlow using pip
+    pip:
+      name: tensorflow
+      state: present
 
-- name: Install NumPy using pip
-  pip:
-    name: numpy
-    state: present
+  - name: Install NumPy using pip
+    pip:
+      name: numpy
+      state: present
 
-- name: Install Pandas using pip
-  pip:
-    name: pandas
-    state: present
+  - name: Install Pandas using pip
+    pip:
+      name: pandas
+      state: present
 
-- name: Install OpenCV using pip
-  pip:
-    name: opencv-python
-    state: present
+  - name: Install OpenCV using pip
+    pip:
+      name: opencv-python
+      state: present
 
-- name: Install Kafka (Python client) using pip
-  pip:
-    name: kafka-python
-    state: present
+  - name: Install Kafka (Python client) using pip
+    pip:
+      name: kafka-python
+      state: present
+
+  - name: Install Kafka (kafka-python)
+    pip:
+      name: kafka
+      state: present
+
+...

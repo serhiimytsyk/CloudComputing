@@ -1,0 +1,45 @@
+---
+- name: Check Firewalld installation
+  package:
+    name: firewalld
+    state: present
+
+- name: Start Firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow SSH in the internal zone
+  firewalld:
+    zone: internal
+    service: ssh
+    permanent: yes
+    state: enabled    
+
+- name: Allow ZooKeeper port
+  firewalld:
+    zone: internal
+    port: 2181/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow Kafka port
+  firewalld:
+    zone: internal
+    port: 9092/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow Docker service
+  firewalld:
+    zone: internal
+    port: 2375/tcp
+    permanent: yes
+    state: enabled
+
+- name: Reload Firewalld to apply changes
+  command: firewall-cmd --reload
+
+
+...
