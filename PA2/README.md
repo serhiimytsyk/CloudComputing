@@ -4,7 +4,23 @@ cd Apps/kafka_2.13-3.6.2 && bin/zookeeper-server-start.sh config/zookeeper.prope
 vm3:
 cd Apps/kafka_2.13-3.6.2 && bin/kafka-server-start.sh config/server.properties
 
-Inference 
+DB
+vm3:
+(instructions from https://docs.vultr.com/install-an-apache-couchdb-database-server-on-ubuntu-20-04)
+sudo apt update
+sudo apt install -y curl apt-transport-https gnupg
+curl https://couchdb.apache.org/repo/keys.asc | gpg --dearmor | sudo tee /usr/share/keyrings/couchdb-archive-keyring.gpg >/dev/null 2>&1 source /etc/os-release
+echo "deb [signed-by=/usr/share/keyrings/couchdb-archive-keyring.gpg] https://apache.jfrog.io/artifactory/couchdb-deb/ focal main" | sudo tee /etc/apt/sources.list.d/couchdb.list >/dev/null
+sudo apt update
+sudo apt install -y couchdb
+
+Choose standalone configuration
+Change bind address as 0.0.0.0 to support distributed communication with couchDB hosts
+sudo nano /opt/couchdb/etc/local.ini
+Change bind address as 0.0.0.0
+sudo systemctl restart couchdb
+
+Inference
 vm3:
 cd PA1/PA2/inference_consumer
 sudo docker build -t inference_consumer .
