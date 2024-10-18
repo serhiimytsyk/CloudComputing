@@ -48,7 +48,7 @@ producer = KafkaProducer(bootstrap_servers="192.168.5.180:9092",
                          api_version=(0, 11, 5))  # wait for leader to write to log
 
 consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092",
-                         api_version=(0, 11, 5))
+                         api_version=(0, 11, 5), consumer_timeout_ms = 15000)
 
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
@@ -87,9 +87,12 @@ def produce():
         # measure request start time in ms with minus sign
         latencies[id] = -int(time.time() * 1000)
 
-        # sleep 200ms
-        time.sleep(0.2)
+        # sleep 100ms
+        time.sleep(0.1)
+
+        print("produced", i)
     # we are done
+    print("producer is done")
     producer.close()
 
 
@@ -99,13 +102,16 @@ def consume():
     for msg in consumer:
         prediction = json.loads(msg.value.decode('utf-8'))
         prediction_id = str(prediction["ID"])
+        print("received a message", msg)
         # Check if it is our image
         if prediction_id.startswith(producer_id + "_"):
             images_left -= 1
+            print("consumed", total_images - images_left)
             # measure request end time in ms with plus sign
             latencies[prediction_id] += int(time.time() * 1000)
             if images_left == 0:  # There are no images left
                 break
+    print("consumer is done")
     consumer.close()
 
 
@@ -123,7 +129,9 @@ if __name__ == "__main__":
     producer_thread.join()
     consumer_thread.join()
 
+    print("completed two threads")
+
     # Print the results to the file
-    with open("/app/output" + producer_id + ".json", "w") as file:
+    with open("/app/output/" + producer_id + ".json", "w") as file:
         json.dump(latencies, file)
     print("done")
