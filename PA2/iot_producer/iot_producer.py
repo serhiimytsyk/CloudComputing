@@ -124,5 +124,6 @@ if __name__ == "__main__":
     consumer_thread.join()
 
     # Print the results to the file
-    with open(producer_id + ".json", "w") as file:
+    with open("/app/output" + producer_id + ".json", "w") as file:
         json.dump(latencies, file)
+    print("done")
