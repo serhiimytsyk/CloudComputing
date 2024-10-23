@@ -18,7 +18,8 @@
 #    insert the 4 private IP addresses one per line here.
 #    If you add manually, then you cannot run the master playbook
 #    in one go.
-# @@
+# @@ inserthere
+
 
 
 [CloudVMs:vars]
@@ -33,5 +34,5 @@
 # @@
 ansible_user=cc
 ansible_connection=ssh
-ansible_ssh_private_key_file=~/PA/PA2/config/foo.pem
-ansible_ssh_common_args='-i ~/PA/PA2/config/F24_BASTION.pem -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p cc@bastion"'
+ansible_ssh_private_key_file=~/.ssh/team17.pem
+ansible_ssh_common_args='-i ~/.ssh/F24_BASTION.pem -o StrictHostKeyChecking=no -o ProxyCommand="ssh -W %h:%p cc@bastion"'
