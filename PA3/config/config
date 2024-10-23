@@ -1,0 +1,53 @@
+Host bastion
+   User cc
+   Hostname 129.114.27.250
+   Port 22
+   IdentityFile ~/PA/PA2/config/F24_BASTION.pem
+   StrictHostKeyChecking no
+   ForwardAgent yes
+   ForwardX11 yes
+   ForwardX11Trusted yes
+
+Host vm1
+   ProxyJump bastion
+   Hostname 192.168.5.160
+   User cc
+   Port 22
+   IdentityFile ~/PA/PA2/config/foo.pem
+   StrictHostKeyChecking no
+   ForwardAgent yes
+   ForwardX11 yes
+   ForwardX11Trusted yes
+
+Host vm2
+   ProxyJump bastion
+   Hostname 192.168.5.157
+   User cc
+   Port 22
+   IdentityFile ~/PA/PA2/config/foo.pem
+   StrictHostKeyChecking no
+   ForwardAgent yes
+   ForwardX11 yes
+   ForwardX11Trusted yes
+
+Host vm3
+   ProxyJump bastion
+   Hostname 192.168.5.180
+   User cc
+   Port 22
+   IdentityFile ~/PA/PA2/config/foo.pem
+   StrictHostKeyChecking no
+   ForwardAgent yes
+   ForwardX11 yes
+   ForwardX11Trusted yes
+
+Host vm4
+   ProxyJump bastion
+   Hostname 192.168.5.137
+   User cc
+   Port 22
+   IdentityFile ~/PA/PA2/config/foo.pem
+   StrictHostKeyChecking no
+   ForwardAgent yes
+   ForwardX11 yes
+   ForwardX11Trusted yes
