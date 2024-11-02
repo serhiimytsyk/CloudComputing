@@ -1,6 +1,6 @@
-from time import sleep
 import requests
 import json
+import time
 
 import sys
 if sys.version_info >= (3, 12, 0):
@@ -75,6 +75,7 @@ if __name__ == "__main__":
                 document['_id'] = str(document["ID"])
                 del document["ID"]
                 insert_document(DB_NAME, document, action="post")
+                time.sleep(0.001)
             except KeyError:
                 print("json object does not have _id key.")
         elif msg.topic == "prediction":
@@ -83,5 +84,6 @@ if __name__ == "__main__":
                 document['_id'] = str(document["ID"])
                 del document["ID"]
                 insert_document(DB_NAME, document, action="put")
+                time.sleep(0.001)
             except KeyError:
                 print("json object does not have _id key.")

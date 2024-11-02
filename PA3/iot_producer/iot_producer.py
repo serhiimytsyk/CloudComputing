@@ -111,6 +111,7 @@ def consume():
             latencies[prediction_id] += int(time.time() * 1000)
             if images_left == 0:  # There are no images left
                 break
+        time.sleep(0.001)
     print("consumer is done")
     consumer.close()
 
