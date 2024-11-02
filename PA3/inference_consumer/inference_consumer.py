@@ -40,7 +40,7 @@ def create_cifar10_model():
 
 
 model = create_cifar10_model()
-model.fit(x_train, y_train, epochs=9, batch_size=64,
+model.fit(x_train, y_train, epochs=6, batch_size=64,
           validation_data=(x_test, y_test))
 model.save_weights('cifar10_model.weights.h5')
 test_loss, test_accuracy = model.evaluate(x_test, y_test)
@@ -51,7 +51,7 @@ consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092")
 consumer.subscribe(topics=["images"])
 
 producer = KafkaProducer(
-    bootstrap_servers="192.168.5.180:9092", acks=1, api_version=(0, 11, 5))
+    bootstrap_servers="192.168.5.180:9092", acks=0, api_version=(0, 11, 5))
 
 for msg in consumer:
     req = json.loads(msg.value.decode('utf-8'))

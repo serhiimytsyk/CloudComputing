@@ -35,7 +35,7 @@ from kafka import KafkaProducer  # producer of events
 from kafka import KafkaConsumer  # consumer of events
 
 producer_id = sys.argv[1]
-total_images = 1000
+total_images = 50 #1000 for demo
 latencies = {}
 
 # We can make this more sophisticated/elegant but for now it is just
@@ -44,7 +44,7 @@ latencies = {}
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
 producer = KafkaProducer(bootstrap_servers="192.168.5.180:9092",
-                         acks=1,
+                         acks=0,
                          api_version=(0, 11, 5))  # wait for leader to write to log
 
 consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092",
@@ -87,8 +87,8 @@ def produce():
         # measure request start time in ms with minus sign
         latencies[id] = -int(time.time() * 1000)
 
-        # sleep 100ms
-        time.sleep(0.1)
+        # sleep 500ms
+        time.sleep(0.5)
 
         print("produced", i)
     # we are done
