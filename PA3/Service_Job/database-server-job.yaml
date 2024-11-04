@@ -16,5 +16,5 @@ spec:
           image: 129.114.25.80:5000/database-consumer # this is the image in registry
           imagePullPolicy: Always # This forces the node to pull the image
           command: ["python3"]
-          args: ["/database_consumer.py"] # arguments to run.
+          args: ["/db_consumer/database_consumer.py"] # arguments to run.
       restartPolicy: Never # we ask Kubernetes not to restart
