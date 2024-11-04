@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ml-inference-deployment
+  name: inference-consumer-deployment
   labels:
-    app: ml-inference
+    app: inference-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ml-inference
+      app: inference-consumer
   template:
     metadata:
       labels:
-        app: ml-inference
+        app: inference-consumer
     spec:
       containers:
-      - name: ml-inference
+      - name: inference-consumer
         image: #TODO - make sure inference_consumer creates an image like 192.168.5.180:5000/ml-inference
         ports:
         - containerPort: 8501
         env:
         - name: MODEL_NAME
-          value: ml-inference-consumer
+          value: inference-consumer
