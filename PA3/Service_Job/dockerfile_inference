@@ -1,0 +1,31 @@
+# Use the latest version of Ubuntu as the base image
+FROM ubuntu:latest
+
+# Set environment variables to avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required dependencies: Python 3, pip, venv, and system packages
+RUN apt-get update && \
+    apt-get install -y python3 python3-pip python3-venv python3-dev \
+    build-essential libopencv-dev && \
+    apt-get clean
+
+# Create a virtual environment for the Python packages
+RUN python3 -m venv /app/venv
+
+ENV PATH="/app/venv/bin:$PATH"
+# Activate the virtual environment and install necessary Python packages via pip
+RUN pip install --upgrade pip && \
+    pip install kafka-python tensorflow pandas numpy opencv-python six
+
+# Copy the Python consumer script into the Docker container
+COPY inference_consumer.py /app/inference_consumer_docker.py
+
+# Set the working directory
+WORKDIR /app
+
+# Expose any necessary ports (Kafka default port 9092 if needed)
+EXPOSE 9092
+
+# Command to run the Python script within the virtual environment
+CMD ["/app/venv/bin/python", "/app/inference_consumer_docker.py"]
