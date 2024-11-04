@@ -1,21 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-consumer
+  name: database-consumer
   labels:
-    app: db-consumer
+    app: database-consumer
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db-consumer
+      app: database-consumer
   template:
     metadata:
       labels:
-        app: db-consumer
+        app: database-consumer
     spec:
       containers:
-      - name: db-consumer
-        image: #TODO
-        ports:
-        - containerPort: 5984
+      - name: database-consumer
+        image: 192.168.5.173:5000/database-consumer

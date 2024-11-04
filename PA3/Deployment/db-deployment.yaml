@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: database
-        image: #TODO
+        image: 192.168.5.173:5000/database
         ports:
         - containerPort: 5984

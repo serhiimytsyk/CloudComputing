@@ -16,9 +16,4 @@ spec:
     spec:
       containers:
       - name: inference-consumer
-        image: #TODO - make sure inference_consumer creates an image like 192.168.5.180:5000/ml-inference
-        ports:
-        - containerPort: 8501
-        env:
-        - name: MODEL_NAME
-          value: inference-consumer
+        image: 192.168.5.173:5000/inference-consumer
