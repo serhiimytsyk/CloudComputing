@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Job
+metadata:
+  name: iot-producer1
+spec:
+  template:
+    metadata:
+      labels:
+        app: iot-producer1
+    spec:
+      containers:
+      - name: iot-producer1
+        image: 192.168.5.173:5000/iot-producer1
+        imagePullPolicy: Always
+        command: ["python3"]
+        args: ["iot_producer_docker.py", "iot_producer_test_1"] 
+      restartPolicy: Never

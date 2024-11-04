@@ -1,0 +1,1 @@
+echo "All services deployed successfully!"
