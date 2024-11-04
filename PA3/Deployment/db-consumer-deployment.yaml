@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-consumer-deployment
+  labels:
+    app: db-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-consumer
+  template:
+    metadata:
+      labels:
+        app: db-consumer
+    spec:
+      containers:
+      - name: db-consumer
+        image: #TODO
+        ports:
+        - containerPort: 5984
