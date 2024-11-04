@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: inference-consumer-deployment
+  name: inference-consumer
   labels:
     app: inference-consumer
 spec:

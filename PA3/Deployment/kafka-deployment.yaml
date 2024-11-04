@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-deployment
+  name: kafka
 spec:
   replicas: 1
   selector:

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db-consumer-deployment
+  name: db-consumer
   labels:
     app: db-consumer
 spec:
