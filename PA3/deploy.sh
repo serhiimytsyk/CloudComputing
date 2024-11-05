@@ -1,3 +1,15 @@
+sudo kubeadm reset
+sudo rm -rf ~/.kube
+sudo rm -rf /etc/cni/net.d/
+
+sudo swapoff -a
+sudo kubeadm init --apiserver-advertise-address 192.168.5.173 --control-plane-endpoint 192.168.5.173 --pod-network-cidr=10.244.0.0/16
+sudo mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+sudo kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+sudo systemctl restart kubelet docker containerd
+
 sudo docker tag apache/kafka 192.168.5.173:5000/kafka
 sudo docker push 192.168.5.173:5000/kafka
 
