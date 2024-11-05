@@ -8,6 +8,7 @@ sudo mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 sudo kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+sudo kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 sudo systemctl restart kubelet docker containerd
 
 sudo docker tag apache/kafka 192.168.5.173:5000/kafka
