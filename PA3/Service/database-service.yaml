@@ -12,4 +12,3 @@ spec:
       protocol: TCP
       port: 5984
       targetPort: 5984
-  clusterIP: None
