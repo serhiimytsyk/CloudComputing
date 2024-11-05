@@ -16,7 +16,7 @@ sudo docker build -t database-consumer ./db_consumer
 sudo docker tag database-consumer 192.168.5.173:5000/database-consumer
 sudo docker push 192.168.5.173:5000/database-consumer
 
-sudo docker build -t iot-producer ./iot-producer
+sudo docker build -t iot-producer ./iot_producer
 sudo docker tag iot-producer 192.168.5.173:5000/iot-producer
 sudo docker push 192.168.5.173:5000/iot-producer
 
