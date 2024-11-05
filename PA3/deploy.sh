@@ -1,7 +1,3 @@
-sudo kubeadm reset
-sudo rm -fr /etc/cni/net.d
-sudo rm -fr ~/.kube
-
 sudo docker tag apache/kafka 192.168.5.173:5000/kafka
 sudo docker push 192.168.5.173:5000/kafka
 
