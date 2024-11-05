@@ -1,3 +1,13 @@
+sudo kubeadm reset
+sudo rm -fr /etc/cni/net.d
+sudo rm -fr ~/.kube
+
+sudo docker tag apache/kafka 192.168.5.173:5000/kafka
+sudo docker push 192.168.5.173:5000/kafka
+
+sudo docker tag couchdb 192.168.5.173:5000/database
+sudo docker push 192.168.5.173:5000/database
+
 sudo docker build -t inference-consumer ./inference_consumer
 sudo docker tag inference-consumer 192.168.5.173:5000/inference-consumer
 sudo docker push 192.168.5.173:5000/inference-consumer
