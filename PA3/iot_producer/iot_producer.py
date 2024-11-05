@@ -43,11 +43,11 @@ latencies = {}
 
 # acquire the producer
 # (you will need to change this to your bootstrap server's IP addr)
-producer = KafkaProducer(bootstrap_servers="192.168.5.180:9092",
+producer = KafkaProducer(bootstrap_servers="kafka:9092",
                          acks=0,
                          api_version=(0, 11, 5))  # wait for leader to write to log
 
-consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092",
+consumer = KafkaConsumer(bootstrap_servers="kafka:9092",
                          api_version=(0, 11, 5), consumer_timeout_ms = 15000)
 
 # acquire the CIFAR10 dataset

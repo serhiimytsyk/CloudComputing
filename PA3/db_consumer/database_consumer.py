@@ -9,8 +9,8 @@ if sys.version_info >= (3, 12, 0):
 from kafka import KafkaConsumer  # consumer of events
 
 # CouchDB configuration
-db_ip = "127.0.0.1"
-COUCHDB_URL = f"http://{db_ip}:5984"
+db_ip = "database"
+COUCHDB_URL = f"{db_ip}:5984"
 USERNAME = "team"
 PASSWORD = "cloudcomputing"
 
@@ -66,7 +66,7 @@ if __name__ == "__main__":
     DB_NAME = "images_database"
     create_database(DB_NAME)
 
-    consumer = KafkaConsumer(bootstrap_servers="192.168.5.180:9092")
+    consumer = KafkaConsumer(bootstrap_servers="kafka:9092")
     consumer.subscribe(topics=["images", "prediction"])
     for msg in consumer:
         if msg.topic == "images":
