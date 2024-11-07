@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: zookeeper
 spec:
-  replicas: 3  # Number of ZooKeeper pods to run (3 is common for production)
+  replicas: 1  # Number of ZooKeeper pods to run (3 is common for production)
   selector:
     matchLabels:
       app: zookeeper
