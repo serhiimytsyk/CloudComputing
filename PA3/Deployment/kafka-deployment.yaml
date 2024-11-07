@@ -1,59 +1,28 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: kafka
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: kafka
-#   minReadySeconds: 5
-
-#   template:
-#     metadata:
-#       labels:
-#         app: kafka
-#     spec:
-#       containers:
-#       - name: kafka
-#         image: 192.168.5.173:5000/kafka
-#         ports:
-#         - containerPort: 9092
-#         env:
-#         - name: KAFKA_ADVERTISED_LISTENERS
-#           value: "PLAINTEXT://kafka-service:9092"
-#         - name: KAFKA_BROKER_ID
-#           value: "1"
-#         - name: KAFKA_CREATE_TOPICS
-#           value: images:1:1
-
-apiVersion: kafka.strimzi.io/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kafka
 spec:
-  kafka:
-    version: 3.6.0                # Ensure compatibility with Strimzi
-    replicas: 3                   # Number of Kafka broker replicas
-    listeners:
-      - name: plain
-        port: 9092
-        type: internal
-        tls: false                # TLS disabled for plain listener
-      - name: external
-        port: 9094
-        type: nodeport            # Makes Kafka accessible outside the cluster
-        tls: false
-    config:
-      offsets.topic.replication.factor: 3
-      transaction.state.log.replication.factor: 3
-      transaction.state.log.min.isr: 2
-    storage:
-      type: ephemeral              # Ephemeral storage; change to 'persistent-claim' for persistent storage
-  zookeeper:
-    replicas: 3                    # Zookeeper replicas required by Strimzi
-    storage:
-      type: ephemeral              # Change to 'persistent-claim' if you want to retain data
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  minReadySeconds: 5
+
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: 192.168.5.173:5000/kafka
+        ports:
+        - containerPort: 9092
+        env:
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: "PLAINTEXT://kafka-service:9092"
+        - name: KAFKA_BROKER_ID
+          value: "1"
+        - name: KAFKA_CREATE_TOPICS
+          value: images:1:1
