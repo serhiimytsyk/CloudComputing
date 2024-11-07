@@ -48,6 +48,8 @@ spec:
         env:
           - name: KAFKA_ADVERTISED_LISTENERS
             value: "PLAINTEXT://kafka-$(POD_NAME).kafka-headless.default.svc.cluster.local:9092"
+          - name: KAFKA_LISTENERS
+            value: "INTERNAL://0.0.0.0:9093"
           - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
             value: "PLAINTEXT:PLAINTEXT"
           - name: KAFKA_LISTENER_NAME_PLAINTEXT_LISTENER
