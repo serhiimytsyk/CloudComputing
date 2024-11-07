@@ -29,7 +29,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: my-kafka
+  name: kafka
 spec:
   kafka:
     version: 3.0.0 # or whichever version supports KRaft mode
@@ -41,7 +41,7 @@ spec:
         tls: false
     config:
       process.roles: "broker,controller"
-      controller.quorum.voters: "1@my-kafka-0.my-kafka-brokers.kafka.svc.cluster.local:9093"
+      controller.quorum.voters: "1@kafka-0.kafka-brokers.kafka.svc.cluster.local:9093"
       listeners: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
       inter.broker.listener.name: PLAINTEXT
       node.id: 1
