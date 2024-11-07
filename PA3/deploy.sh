@@ -18,7 +18,7 @@ sudo docker push 192.168.5.173:5000/kafka
 sudo docker tag couchdb 192.168.5.173:5000/database
 sudo docker push 192.168.5.173:5000/database
 
-sudo docker tag zookeeper 192.168.5.173:5000/zookeeper
+sudo docker tag wurstmeister/zookeeper 192.168.5.173:5000/zookeeper
 sudo docker push 192.168.5.173:5000/zookeeper
 
 sudo docker build -t inference-consumer ./inference_consumer
