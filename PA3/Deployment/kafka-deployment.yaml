@@ -53,5 +53,15 @@ spec:
             value: "PLAINTEXT://0.0.0.0:9092"
           - name: KAFKA_LISTENER_PORT
             value: "9092"
+          - name: KAFKA_LOG4J_OPTS
+            value: "-Dlog4j.configuration=file:/opt/kafka/custom-config/log4j.properties"
         ports:
           - containerPort: 9092
+        volumeMounts:
+          - name: log4j-config
+            mountPath: /opt/kafka/custom-config
+            subPath: log4j.properties
+      volumes:
+        - name: log4j-config
+          configMap:
+            name: log4j-config
