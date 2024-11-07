@@ -12,7 +12,7 @@
 # sudo kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
 # sudo systemctl restart kubelet docker containerd
 
-sudo docker tag strimzi/kafka 192.168.5.173:5000/kafka
+sudo docker tag wurstmeister/kafka 192.168.5.173:5000/kafka
 sudo docker push 192.168.5.173:5000/kafka
 
 sudo docker tag couchdb 192.168.5.173:5000/database
