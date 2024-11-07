@@ -26,3 +26,5 @@ spec:
           value: "1"
         - name: KAFKA_CREATE_TOPICS
           value: images:1:1
+        - name: KAFKA_KRAFT_MODE
+          value: "true"
