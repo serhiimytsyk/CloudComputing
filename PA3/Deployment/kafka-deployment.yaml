@@ -31,7 +31,6 @@ apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: kafka
-  namespace: kafka  # Make sure this matches where Strimzi is deployed
 spec:
   kafka:
     version: 3.6.0                # Ensure compatibility with Strimzi
