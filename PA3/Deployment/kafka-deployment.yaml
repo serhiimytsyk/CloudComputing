@@ -63,9 +63,9 @@ spec:
           - name: log4j-config
             mountPath: /opt/kafka/custom-config/log4j.properties
             subPath: log4j.properties
-          - name: server-config
-            mountPath: /opt/kafka/config/server.properties
-            subPath: server.properties  # This mounts the custom server.properties file
+          # - name: server-config
+          #   mountPath: /opt/kafka/config/server.properties
+          #   subPath: server.properties  # This mounts the custom server.properties file
       volumes:
         - name: log4j-config
           configMap:
