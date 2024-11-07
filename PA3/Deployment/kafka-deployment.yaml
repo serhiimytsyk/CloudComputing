@@ -53,9 +53,5 @@ spec:
             value: "PLAINTEXT://0.0.0.0:9092"
           - name: KAFKA_LISTENER_PORT
             value: "9092"
-          - name: KAFKA_LOG4J_LOGGERS
-            value: "kafka.network=DEBUG,kafka.log=DEBUG"  # Example of additional logging
-          - name: LOG4J_OPTS
-            value: "-Dlog4j.configurationFile=classpath:log4j2.xml"  # Disables custom log4j.properties
         ports:
           - containerPort: 9092
