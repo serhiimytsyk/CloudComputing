@@ -1,28 +1,55 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: kafka
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: kafka
-  minReadySeconds: 5
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: kafka
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: kafka
+#   minReadySeconds: 5
 
-  template:
-    metadata:
-      labels:
-        app: kafka
-    spec:
-      containers:
-      - name: kafka
-        image: 192.168.5.173:5000/kafka
-        ports:
-        - containerPort: 9092
-        env:
-        - name: KAFKA_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://kafka-service:9092"
-        - name: KAFKA_BROKER_ID
-          value: "1"
-        - name: KAFKA_CREATE_TOPICS
-          value: images:1:1
+#   template:
+#     metadata:
+#       labels:
+#         app: kafka
+#     spec:
+#       containers:
+#       - name: kafka
+#         image: 192.168.5.173:5000/kafka
+#         ports:
+#         - containerPort: 9092
+#         env:
+#         - name: KAFKA_ADVERTISED_LISTENERS
+#           value: "PLAINTEXT://kafka-service:9092"
+#         - name: KAFKA_BROKER_ID
+#           value: "1"
+#         - name: KAFKA_CREATE_TOPICS
+#           value: images:1:1
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: my-kafka
+spec:
+  kafka:
+    version: 3.0.0 # or whichever version supports KRaft mode
+    replicas: 1
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+    config:
+      process.roles: "broker,controller"
+      controller.quorum.voters: "1@my-kafka-0.my-kafka-brokers.kafka.svc.cluster.local:9093"
+      listeners: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+      inter.broker.listener.name: PLAINTEXT
+      node.id: 1
+      log.dirs: "/var/lib/kafka/data"
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 0
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
