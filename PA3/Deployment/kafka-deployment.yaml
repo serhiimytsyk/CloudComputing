@@ -28,3 +28,5 @@ spec:
           value: images:1:1
         - name: KAFKA_KRAFT_MODE
           value: "true"
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: ""
