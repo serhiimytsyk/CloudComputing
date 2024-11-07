@@ -15,18 +15,34 @@ spec:
         app: kafka
     spec:
       containers:
-      - name: kafka
-        image: 192.168.5.173:5000/kafka
-        ports:
-        - containerPort: 9092
-        env:
-        - name: KAFKA_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://kafka-service:9092"
-        - name: KAFKA_BROKER_ID
-          value: "1"
-        - name: KAFKA_CREATE_TOPICS
-          value: images:1:1
-        - name: KAFKA_KRAFT_MODE
-          value: "true"
-        - name: KAFKA_ZOOKEEPER_CONNECT
-          value: ""
+        - name: kafka
+          image: 192.168.5.173:5000/kafka
+          ports:
+            - containerPort: 9092
+          env:
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://kafka-service:9092"  # External listener for clients
+            - name: KAFKA_BROKER_ID
+              value: "1"  # Unique broker ID (you can make this dynamic for multi-broker setups)
+            - name: KAFKA_CREATE_TOPICS
+              value: "images:1:1"  # Optional topic creation (adjust as needed)
+            - name: KAFKA_KRAFT_MODE
+              value: "true"  # Enable KRaft mode
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL
+              value: "PLAINTEXT"  # Use PLAINTEXT protocol for communication (adjust if needed)
+            - name: KAFKA_LISTENER_NAME_INTERNAL
+              value: "INTERNAL"  # Internal listener name for broker-to-broker communication
+            - name: KAFKA_LISTENER_PORT
+              value: "9092"  # Kafka's listener port
+            - name: KAFKA_LOG_DIRS
+              value: "/var/lib/kafka/data"  # Kafka log directory (adjust path as needed)
+            - name: KAFKA_STORAGE_DIRECTORY
+              value: "/var/lib/kafka/data"  # Storage directory for KRaft metadata
+            - name: KAFKA_KRAFT_MODE_STORAGE_DIR
+              value: "/var/lib/kafka/raft-logs"  # Directory for KRaft mode logs (new)
+          volumeMounts:
+            - name: kafka-data
+              mountPath: /var/lib/kafka/data  # Mount point for Kafka's log data
+      volumes:
+        - name: kafka-data
+          emptyDir: {}  # In-memory storage for dev purposes (use PVC for production)
