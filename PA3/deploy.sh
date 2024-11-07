@@ -37,11 +37,11 @@ kubectl apply -f ./Deployment/database-deployment.yaml
 kubectl apply -f ./Deployment/db-consumer-deployment.yaml
 kubectl apply -f ./Deployment/inference-consumer-deployment.yaml
 kubectl apply -f ./Deployment/kafka-deployment.yaml
-kubectl apply -f zookeeper-deployment.yaml
+kubectl apply -f ./Deployment/zookeeper-deployment.yaml
 
 kubectl apply -f ./Service/database-service.yaml
 kubectl apply -f ./Service/kafka-service.yaml
-kubectl apply -f zookeeper-service.yaml
+kubectl apply -f ./Service/zookeeper-service.yaml
 
 kubectl apply -f ./Job/iot-producer1-job.yaml
 
