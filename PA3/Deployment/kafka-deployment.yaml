@@ -28,7 +28,7 @@
 #           value: images:1:1
 
 apiVersion: kafka.strimzi.io/v1beta2
-kind: Kafka
+kind: Deployment
 metadata:
   name: kafka
 spec:
