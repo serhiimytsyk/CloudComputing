@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: wurstmeister/zookeeper:3.5.9  # You can use your preferred version
+        image: 192.168.5.173:5000/zookeeper  # You can use your preferred version
         ports:
         - containerPort: 2181
         volumeMounts:
