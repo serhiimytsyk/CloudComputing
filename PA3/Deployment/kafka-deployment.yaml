@@ -26,30 +26,41 @@
 #           value: "1"
 #         - name: KAFKA_CREATE_TOPICS
 #           value: images:1:1
-apiVersion: kafka.strimzi.io/v1beta2
-kind: Kafka
+
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: kafka
 spec:
-  kafka:
-    version: 3.0.0 # or whichever version supports KRaft mode
-    replicas: 1
-    listeners:
-      - name: plain
-        port: 9092
-        type: internal
-        tls: false
-    config:
-      process.roles: "broker,controller"
-      controller.quorum.voters: "1@kafka-0.kafka-brokers.kafka.svc.cluster.local:9093"
-      listeners: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
-      inter.broker.listener.name: PLAINTEXT
-      node.id: 1
-      log.dirs: "/var/lib/kafka/data"
-    storage:
-      type: ephemeral
-  zookeeper:
-    replicas: 0
-  entityOperator:
-    topicOperator: {}
-    userOperator: {}
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+      - name: kafka
+        image: confluentinc/cp-kafka:7.3.0  # Use a compatible KRaft-mode Kafka image
+        env:
+          - name: KAFKA_PROCESS_ROLES
+            value: "broker,controller"
+          - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+            value: "1@localhost:9093"  # Adjust for your setup
+          - name: KAFKA_LISTENERS
+            value: "PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+          - name: KAFKA_ADVERTISED_LISTENERS
+            value: "PLAINTEXT://kafka-service:9092"
+          - name: KAFKA_LOG_DIRS
+            value: "/var/lib/kafka/data"
+        ports:
+        - containerPort: 9092
+        - containerPort: 9093
+        volumeMounts:
+          - name: kafka-data
+            mountPath: /var/lib/kafka/data
+      volumes:
+        - name: kafka-data
+          emptyDir: {}
