@@ -18,6 +18,9 @@ sudo docker push 192.168.5.173:5000/kafka
 sudo docker tag couchdb 192.168.5.173:5000/database
 sudo docker push 192.168.5.173:5000/database
 
+sudo docker tag zookeeper 192.168.5.173:5000/zookeeper
+sudo docker push 192.168.5.173:5000/zookeeper
+
 sudo docker build -t inference-consumer ./inference_consumer
 sudo docker tag inference-consumer 192.168.5.173:5000/inference-consumer
 sudo docker push 192.168.5.173:5000/inference-consumer
@@ -34,9 +37,11 @@ kubectl apply -f ./Deployment/database-deployment.yaml
 kubectl apply -f ./Deployment/db-consumer-deployment.yaml
 kubectl apply -f ./Deployment/inference-consumer-deployment.yaml
 kubectl apply -f ./Deployment/kafka-deployment.yaml
+kubectl apply -f zookeeper-deployment.yaml
 
 kubectl apply -f ./Service/database-service.yaml
 kubectl apply -f ./Service/kafka-service.yaml
+kubectl apply -f zookeeper-service.yaml
 
 kubectl apply -f ./Job/iot-producer1-job.yaml
 

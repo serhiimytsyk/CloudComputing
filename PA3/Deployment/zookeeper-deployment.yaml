@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+spec:
+  replicas: 3  # Number of ZooKeeper pods to run (3 is common for production)
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+      - name: zookeeper
+        image: wurstmeister/zookeeper:3.5.9  # You can use your preferred version
+        ports:
+        - containerPort: 2181
+        volumeMounts:
+        - name: zookeeper-data
+          mountPath: /data
+        - name: zookeeper-datalog
+          mountPath: /datalog
+      volumes:
+      - name: zookeeper-data
+        emptyDir: {}  # Use persistent storage in production
+      - name: zookeeper-datalog
+        emptyDir: {}  # Use persistent storage in production
