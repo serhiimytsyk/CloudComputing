@@ -43,7 +43,7 @@ spec:
     spec:
       containers:
       - name: kafka
-        image: strimzi/kafka:latest
+        image: 192.168.5.173:5000/kafka
         env:
           - name: KAFKA_ADVERTISED_LISTENERS
             value: "PLAINTEXT://kafka-service:9092"
