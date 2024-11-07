@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: kafka
-        image: 192.168.5.173:5000/kafkagi
+        image: 192.168.5.173:5000/kafka
         env:
           - name: KAFKA_ADVERTISED_LISTENERS
             value: "PLAINTEXT://kafka-$(POD_NAME).kafka-headless.default.svc.cluster.local:9092"
