@@ -50,11 +50,19 @@ producer = KafkaProducer(bootstrap_servers="kafka:9092",
 consumer = KafkaConsumer(bootstrap_servers="kafka:9092",
                          api_version=(0, 11, 5), consumer_timeout_ms = 15000)
 
+time.sleep(400)
+
 # acquire the CIFAR10 dataset
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.cifar10.load_data()
 
 x_train, x_test = x_train / 255.0, x_test / 255.0
 
+x_train = x_train[:total_images]
+x_test = x_test[:total_images]
+y_train = y_train[:total_images]
+y_test = y_test[:total_images]
+import gc
+gc.collect()
 
 def blur_image(image):
     image = np.uint8(image * 255)

@@ -40,11 +40,22 @@ def create_cifar10_model():
 
 
 model = create_cifar10_model()
-model.fit(x_train, y_train, epochs=6, batch_size=64,
+model.fit(x_train, y_train, epochs=4, batch_size=64,
           validation_data=(x_test, y_test))
 model.save_weights('cifar10_model.weights.h5')
 test_loss, test_accuracy = model.evaluate(x_test, y_test)
 print(f"Test accuracy: {test_accuracy:.4f}")
+
+import gc
+del x_train
+del x_test
+del y_train
+del y_test
+gc.collect()
+x_train = []
+x_test = []
+y_train = []
+y_test = []
 
 
 consumer = KafkaConsumer(bootstrap_servers="kafka:9092")

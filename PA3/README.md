@@ -10,7 +10,7 @@ Deploy everything: bash deploy.sh
 Experiment 1
 sudo nano deploy.sh
 comment last 4 jobs
-sudo nano iot-producer1-job.yaml
+sudo nano Job/iot-producer1-job.yaml
 Edit id to iot_producer_one_1
 
 kubectl delete job iot-producer1
@@ -22,11 +22,8 @@ kubectl cp default/<pod-name>:/app/output/iot_producer_one_1.json ./iot_producer
 Experiment 2
 sudo nano deploy.sh
 comment last 3 jobs
-sudo nano iot-producer1-job.yaml
+sudo nano Job/iot-producer1-job.yaml
 Edit id to iot_producer_two_1
-
-sudo nano iot-producer2-job.yaml
-Edit id to iot_producer_two_2
 
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
@@ -38,14 +35,8 @@ kubectl cp default/<pod-name>:/app/output/iot_producer_two_1.json ./iot_producer
 Experiment 3
 sudo nano deploy.sh
 comment last 2 jobs
-sudo nano iot-producer1-job.yaml
+sudo nano Job/iot-producer1-job.yaml
 Edit id to iot_producer_three_1
-
-sudo nano iot-producer2-job.yaml
-Edit id to iot_producer_three_2
-
-sudo nano iot-producer3-job.yaml
-Edit id to iot_producer_three_3
 
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
@@ -58,44 +49,23 @@ kubectl cp default/<pod-name>:/app/output/iot_producer_three_1.json ./iot_produc
 Experiment 4
 sudo nano deploy.sh
 comment last 1 jobs
-sudo nano iot-producer1-job.yaml
+sudo nano Job/iot-producer1-job.yaml
 Edit id to iot_producer_four_1
-
-sudo nano iot-producer2-job.yaml
-Edit id to iot_producer_four_2
-
-sudo nano iot-producer3-job.yaml
-Edit id to iot_producer_four_3
-
-sudo nano iot-producer4-job.yaml
-Edit id to iot_producer_four_4
 
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
 kubectl delete job iot-producer3
 kubectl delete job iot-producer4
 bash deploy.sh
-wait 500 seconds
+wait 1000 seconds
 kubectl get pods -A -o wide
 kubectl cp default/<pod-name>:/app/output/iot_producer_four_1.json ./iot_producer/target/iot_producer_four_1.json
 
 Experiment 5
 sudo nano deploy.sh
 comment last 0 jobs
-sudo nano iot-producer1-job.yaml
+sudo nano Job/iot-producer1-job.yaml
 Edit id to iot_producer_five_1
-
-sudo nano iot-producer2-job.yaml
-Edit id to iot_producer_five_2
-
-sudo nano iot-producer3-job.yaml
-Edit id to iot_producer_five_3
-
-sudo nano iot-producer4-job.yaml
-Edit id to iot_producer_five_4
-
-sudo nano iot-producer5-job.yaml
-Edit id to iot_producer_five_5
 
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
