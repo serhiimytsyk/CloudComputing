@@ -35,7 +35,7 @@ from kafka import KafkaProducer  # producer of events
 from kafka import KafkaConsumer  # consumer of events
 
 producer_id = sys.argv[1]
-total_images = 50 #1000 for demo
+total_images = 1000
 latencies = {}
 
 # We can make this more sophisticated/elegant but for now it is just

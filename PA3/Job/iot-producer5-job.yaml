@@ -12,6 +12,6 @@ spec:
       - name: iot-producer5
         image: 192.168.5.173:5000/iot-producer
         imagePullPolicy: Always
-        command: ["python3"]
-        args: ["iot_producer_docker.py", "iot_producer_5"] 
+        command: ["sh", "-c"]
+        args: ["python3 iot_producer_docker.py iot_producer_5 && sleep 3600"]
       restartPolicy: Never
