@@ -45,8 +45,8 @@ kubectl apply -f ./Service/zookeeper-service.yaml
 
 kubectl apply -f ./Job/iot-producer1-job.yaml
 kubectl apply -f ./Job/iot-producer2-job.yaml
-kubectl apply -f ./Job/iot-producer3-job.yaml
-kubectl apply -f ./Job/iot-producer4-job.yaml
-kubectl apply -f ./Job/iot-producer5-job.yaml
+#kubectl apply -f ./Job/iot-producer3-job.yaml
+#kubectl apply -f ./Job/iot-producer4-job.yaml
+#kubectl apply -f ./Job/iot-producer5-job.yaml
 
 echo "All services deployed successfully!"
