@@ -10,7 +10,7 @@ from kafka import KafkaConsumer  # consumer of events
 
 # CouchDB configuration
 db_ip = "database"
-COUCHDB_URL = f"{db_ip}:5984"
+COUCHDB_URL = f"http://{db_ip}:5984"
 USERNAME = "team"
 PASSWORD = "cloudcomputing"
 
