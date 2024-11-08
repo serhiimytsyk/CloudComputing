@@ -4,9 +4,9 @@ metadata:
   name: zookeeper
 spec:
   selector:
-    app: zookeeper  # Matches the app label in the Deployment
+    app: zookeeper
   ports:
     - protocol: TCP
       port: 2181
-      targetPort: 2181  # Port inside the ZooKeeper container
-  clusterIP: None  # This makes the service headless, which is useful for ZooKeeper cluster communication
+      targetPort: 2181
+  clusterIP: None

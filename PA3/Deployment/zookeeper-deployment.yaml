@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: zookeeper
 spec:
-  replicas: 1  # Number of ZooKeeper pods to run (3 is common for production)
+  replicas:
   selector:
     matchLabels:
       app: zookeeper
@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: 192.168.5.173:5000/zookeeper  # You can use your preferred version
+        image: 192.168.5.173:5000/zookeeper
         ports:
         - containerPort: 2181
         volumeMounts:
@@ -24,6 +24,6 @@ spec:
           mountPath: /datalog
       volumes:
       - name: zookeeper-data
-        emptyDir: {}  # Use persistent storage in production
+        emptyDir: {}
       - name: zookeeper-datalog
-        emptyDir: {}  # Use persistent storage in production
+        emptyDir: {}

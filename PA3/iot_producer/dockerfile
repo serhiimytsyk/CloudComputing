@@ -29,4 +29,4 @@ WORKDIR /app
 EXPOSE 9092
 
 # Command to run the Python script within the virtual environment
-CMD ["/app/venv/bin/python", "/app/iot_producer_docker.py", "iot_producer_test_1"]
+# CMD ["/app/venv/bin/python", "/app/iot_producer_docker.py", "iot_producer_test_1"]
