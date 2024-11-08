@@ -16,10 +16,10 @@ Edit id to iot_producer_one_1
 
 ```bash
 kubectl delete job iot-producer1
-kubectl delete job iot-producer2
+for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
 bash deploy.sh
 ```
-wait 500 seconds  
+wait 900 seconds  
 ```bash
 kubectl get pods -A -o wide 
 kubectl cp default/<pod-name>:/app/output/iot_producer_one_1.json ./iot_producer/target/iot_producer_one_1.json
@@ -35,9 +35,10 @@ Edit id to iot_producer_two_1
 ```bash
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
+for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
 bash deploy.sh
 ``` 
-wait 500 seconds  
+wait 900 seconds  
 ```bash
 kubectl get pods -A -o wide  
 kubectl cp default/<pod-name>:/app/output/iot_producer_two_1.json ./iot_producer/target/iot_producer_two_1.json 
@@ -53,9 +54,10 @@ Edit id to iot_producer_three_1
 kubectl delete job iot-producer1
 kubectl delete job iot-producer2
 kubectl delete job iot-producer3
+for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
 bash deploy.sh
 ``` 
-wait 500 seconds  
+wait 900 seconds  
 ```bash
 kubectl get pods -A -o wide  
 kubectl cp default/<pod-name>:/app/output/iot_producer_three_1.json ./iot_producer/target/iot_producer_three_1. json   
@@ -72,8 +74,10 @@ kubectl delete job iot-producer1
 kubectl delete job iot-producer2
 kubectl delete job iot-producer3
 kubectl delete job iot-producer4 
+for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
 bash deploy.sh
-wait 1000 seconds
+```
+wait 900 seconds
 kubectl get pods -A -o wide
 kubectl cp default/<pod-name>:/app/output/iot_producer_four_1.json ./iot_producer/target/iot_producer_four_1.json
 
@@ -90,9 +94,10 @@ kubectl delete job iot-producer2
 kubectl delete job iot-producer3
 kubectl delete job iot-producer4 
 kubectl delete job iot-producer5 
+for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
 bash deploy.sh
 ```
-wait 500 seconds  
+wait 900 seconds  
 ```bash
 kubectl get pods -A -o wide
 kubectl cp default/<pod-name>:/app/output/iot_producer_five_1.json ./iot_producer/target/iot_producer_five_1.json
