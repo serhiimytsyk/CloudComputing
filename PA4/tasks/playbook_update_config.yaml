@@ -1,0 +1,47 @@
+---
+  - name: Remove existing config.toml
+    ansible.builtin.file:
+      path: /etc/containerd/config.toml
+      state: absent
+
+  - name: Create new default config.toml
+    ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
+
+  - name: Make SystemdCgroup true
+    ansible.builtin.replace:  
+      path: /etc/containerd/config.toml
+      regexp: "SystemdCgroup = false"
+      replace: "SystemdCgroup = true"
+
+  - name: Change pause version (3.6)
+    ansible.builtin.replace:
+      path: /etc/containerd/config.toml
+      regexp: 'sandbox_image = "registry.k8s.io/pause:3.6"'
+      replace: 'sandbox_image = "registry.k8s.io/pause:3.10"'
+
+  - name: Change pause version (3.8)
+    ansible.builtin.replace:
+      path: /etc/containerd/config.toml
+      regexp: 'sandbox_image = "registry.k8s.io/pause:3.8"'
+      replace: 'sandbox_image = "registry.k8s.io/pause:3.10"'
+
+  - name: Restart containerd
+    service:
+      name: containerd
+      state: restarted
+  
+  - name: Restart docker
+    service:
+      name: docker
+      state: restarted
+
+  - name: Swap off
+    ansible.builtin.shell: swapoff -a
+  
+  - name: Perma swap off
+    mount:
+      name: swap
+      fstype: swap
+      state: absent
+
+...

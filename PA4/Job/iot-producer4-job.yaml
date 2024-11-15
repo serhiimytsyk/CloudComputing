@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iot-producer4
+spec:
+  template:
+    metadata:
+      labels:
+        app: iot-producer4
+    spec:
+      containers:
+      - name: iot-producer4
+        image: 192.168.5.173:5000/iot-producer
+        imagePullPolicy: Always
+        command: ["sh", "-c"]
+        args: ["python3 iot_producer_docker.py iot_producer_4 && sleep 3600"]
+      restartPolicy: Never

@@ -1,0 +1,13 @@
+---
+  - name: Creates Apps directory
+    ansible.builtin.file:
+      path: /home/cc/Apps
+      state: directory
+    become: no
+
+  - name: Unpack Kafka from local to VM
+    ansible.builtin.unarchive:
+        src: ~/tmp/kafka_2.13-3.6.2.tgz
+        dest: '/home/cc/Apps'
+        #copy: no
+    become: no

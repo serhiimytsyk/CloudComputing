@@ -1,0 +1,33 @@
+---
+  - name: Copy daemon.json to /etc/docker/directory
+    copy:
+      src: ~/daemon.json
+      dest: /etc/docker/daemon.json
+
+  - name: Update config.toml
+    lineinfile:
+      path: /etc/containerd/config.toml
+      state: present
+      insertafter: '^\s*\[plugins."io.containerd.grpc.v1.cri".registry.mirrors]'
+      line: '        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."192.168.5.173:5000"] endpoint=["http://192.168.5.173:5000"]'
+      create: yes
+
+  - name: Restart containerd
+    service:
+      name: containerd
+      state: restarted
+  
+  - name: Restart docker
+    service:
+      name: docker
+      state: restarted
+  
+  - name: Run registry
+    docker_container:
+      name: Team17_Registry
+      image: registry:2
+      state: started
+      restart_policy: always
+      published_ports: "5000:5000"
+
+...

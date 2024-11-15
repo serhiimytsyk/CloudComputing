@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inference-consumer
+  labels:
+    app: inference-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inference-consumer
+  template:
+    metadata:
+      labels:
+        app: inference-consumer
+    spec:
+      containers:
+      - name: inference-consumer
+        image: 192.168.5.173:5000/inference-consumer

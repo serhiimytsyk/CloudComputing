@@ -1,0 +1,135 @@
+---
+- name: Check Firewalld installation
+  package:
+    name: firewalld
+    state: present
+
+- name: Start Firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow SSH in the internal zone
+  firewalld:
+    zone: internal
+    service: ssh
+    permanent: yes
+    state: enabled    
+
+- name: Allow ZooKeeper port
+  firewalld:
+    zone: internal
+    port: 2181/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow Kafka port
+  firewalld:
+    zone: internal
+    port: 9092/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow Docker service
+  firewalld:
+    zone: internal
+    port: 2375/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s secure communication with the cluster
+  firewalld:
+    zone: internal
+    port: 443/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s API server, etcd communication
+  firewalld:
+    zone: internal
+    port: 2379-2381/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s API server
+  firewalld:
+    zone: internal
+    port: 6443/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s kubelet
+  firewalld:
+    zone: internal
+    port: 10250/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s kube proxy
+  firewalld:
+    zone: internal
+    port: 10256/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s controller
+  firewalld:
+    zone: internal
+    port: 10257/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s scheduler
+  firewalld:
+    zone: internal
+    port: 10259/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow web server
+  firewalld:
+    zone: internal
+    port: 80/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow K8s RBAC
+  firewalld:
+    zone: internal
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow Flannel VXLAN
+  firewalld:
+    zone: internal
+    port: 8285/udp
+    permanent: yes
+    state: enabled
+
+- name: Allow Flannel
+  firewalld:
+    zone: internal
+    port: 8279/udp
+    permanent: yes
+    state: enabled
+
+- name: Allow Docker private registry
+  firewalld:
+    zone: internal
+    port: 5000/tcp
+    permanent: yes
+    state: enabled
+
+- name: Allow application advertisement
+  firewalld:
+    zone: internal
+    port: 3000-30100/tcp
+    permanent: yes
+    state: enabled
+
+- name: Reload Firewalld to apply changes
+  ansible.builtin.shell: firewall-cmd --reload
+
+...
