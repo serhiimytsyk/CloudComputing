@@ -1,0 +1,137 @@
+---
+  - name: Wait for CloudVMs to be defined
+    pause:
+      seconds: 5  # Wait for 5 seconds
+    register: wait_result
+    until: groups['CloudVMs'] | length == 4  # Wait until hosts are present
+    retries: 6  # Retry up to 6 times (30 seconds total)
+    
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
+  - name: Install make
+    apt: 
+      name: make 
+      state: latest
+    become: yes
+
+  - name: Install cmake
+    apt: 
+      name: cmake 
+      state: latest
+    become: yes
+
+  - name: Install git
+    apt: 
+      name: git 
+      state: latest
+    become: yes
+
+  - name: Install gcc
+    apt: 
+      name: gcc 
+      state: latest
+    become: yes
+
+  - name: Install g++
+    apt: 
+      name: g++ 
+      state: latest
+    become: yes
+
+  - name: Install clang
+    apt: 
+      name: clang 
+      state: latest
+    become: yes
+
+  - name: Install default-jdk
+    apt: 
+      name: default-jdk 
+      state: latest
+    become: yes
+
+  - name: Install python3-dev
+    apt: 
+      name: python3-dev 
+      state: latest
+    become: yes
+
+  - name: Install python3-pip
+    apt: 
+      name: python3-pip 
+      state: latest
+    become: yes
+
+  - name: Install wget
+    apt: 
+      name: wget 
+      state: latest
+    become: yes
+
+  - name: Install net-tools
+    apt: 
+      name: net-tools 
+      state: latest
+    become: yes
+
+  - name: Install dnsutils
+    apt: 
+      name: dnsutils 
+      state: latest
+    become: yes
+
+  - name: Install iputils-ping
+    apt: 
+      name: iputils-ping 
+      state: latest
+    become: yes
+
+  - name: Install iputils-tracepath
+    apt: 
+      name: iputils-tracepath 
+      state: latest
+    become: yes
+
+  - name: Install iputils-arping
+    apt: 
+      name: iputils-arping 
+      state: latest
+    become: yes
+
+  - name: Install iputils-clockdiff
+    apt: 
+      name: iputils-clockdiff 
+      state: latest
+    become: yes
+
+  - name: Install inetutils-traceroute
+    apt: 
+      name: inetutils-traceroute 
+      state: latest
+    become: yes
+
+  - name: Install vim
+    apt: 
+      name: vim 
+      state: latest
+    become: yes
+
+  - name: Install nano
+    apt: 
+      name: nano 
+      state: latest
+    become: yes
+
+  - name: Install emacs
+    apt: 
+      name: emacs 
+      state: latest
+    become: yes
+
+  - name: Install protobuf-compiler
+    apt: 
+      name: protobuf-compiler 
+      state: latest
+    become: yes

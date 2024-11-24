@@ -1,0 +1,74 @@
+---
+  - name: Install Python pip (if not already installed)
+    apt:
+      name: python3-pip
+      state: present
+      update_cache: yes
+
+  - name: Install TensorFlow using pip
+    pip:
+      name: tensorflow
+      state: present
+
+  - name: Install NumPy using pip
+    pip:
+      name: numpy
+      state: present
+
+  - name: Install Pandas using pip
+    pip:
+      name: pandas
+      state: present
+
+  - name: Install OpenCV using pip
+    pip:
+      name: opencv-python
+      state: present
+
+  - name: Install Kafka (Python client) using pip
+    pip:
+      name: kafka-python
+      state: present
+
+  - name: Install Kafka (kafka-python)
+    pip:
+      name: kafka
+      state: present
+
+  - name: Install Yfinance
+    pip:
+      name: yfinance
+      state: present
+
+  - name: Install Statsmodels
+    pip:
+      name: statsmodels
+      state: present
+
+  - name: Install Pmdarima
+    pip:
+      name: pmdarima
+      state: present
+
+  - name: Install Matplotlib
+    pip:
+      name: matplotlib
+      state: present
+
+  - name: Install Seaborn
+    pip:
+      name: seaborn
+      state: present    
+
+  - name: Install Torch
+    pip:
+      name: torch
+      state: present
+
+
+  - name: Install Darts
+    pip:
+      name: darts
+      state: present
+
+...
