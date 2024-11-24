@@ -7,6 +7,6 @@
 
   - name: Download Kafka
     ansible.builtin.get_url:
-        url: 'https://downloads.apache.org/kafka/3.6.2/kafka_2.13-3.6.2.tgz'
-        dest: ~/tmp/kafka_2.13-3.6.2.tgz
+        url: 'https://downloads.apache.org/kafka/3.7.1/kafka_2.13-3.7.1.tgz'
+        dest: ~/tmp/kafka_2.13-3.7.1.tgz
     become: no

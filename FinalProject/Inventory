@@ -19,6 +19,10 @@
 #    If you add manually, then you cannot run the master playbook
 #    in one go.
 # @@ inserthere
+192.168.5.245 ansible_python_interpreter=/usr/bin/python3
+192.168.5.64 ansible_python_interpreter=/usr/bin/python3
+192.168.5.225 ansible_python_interpreter=/usr/bin/python3
+192.168.5.171 ansible_python_interpreter=/usr/bin/python3
 
 
 [CloudVMs:vars]
