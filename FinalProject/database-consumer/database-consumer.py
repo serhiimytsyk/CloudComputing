@@ -51,10 +51,9 @@ def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
         print(f"Error inserting document: {response.json()}",
               f"status code: {response.status_code}")
 
-
-# Main logic has to be changed
-# We need to delete and create database again if it exists
-# Check if status is confirmed, ignore rejected orders
+# TODO Main logic has to be changed
+# TODO We need to delete and create database again if it exists
+# TODO Check if status is confirmed, ignore rejected orders
 if __name__ == "__main__":
     DB_NAME = "orders_database"
     create_database(DB_NAME)
@@ -64,8 +63,8 @@ if __name__ == "__main__":
     for msg in consumer:
         document = json.loads(msg.value.decode('utf-8'))
         try:
-            document['_id'] = str(document["ID"])
-            del document["ID"]
+            document['_id'] = str(document["id"])
+            del document["id"]
             insert_document(DB_NAME, document, action="post")
             time.sleep(0.001)
         except KeyError:
