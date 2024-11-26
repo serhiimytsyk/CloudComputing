@@ -2,6 +2,8 @@ import os
 import time
 import json
 import sys
+import secrets
+import string
 
 if sys.version_info >= (3, 12, 0):
     import six
@@ -27,22 +29,102 @@ consumer1 = KafkaConsumer(bootstrap_servers="kafka:9092",
 consumer2 = KafkaConsumer(bootstrap_servers="kafka:9092",
                          api_version=(0, 11, 5), consumer_timeout_ms = 150000)
 
-time.sleep(30)
+time.sleep(1)
 
-# Train a model
-# Implement a state
+def generate_id():
+    characters = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(characters) for _ in range(10))
+
+# TODO Load a pre-trained model / models and make predictions
+prices = []
+
+def predict_next_price():
+    return 0
+
+all_orders = {}
+
+opening_orders = set()
+closing_orders = set()
+
+delta = 0.004
+
+def create_order(id, type, quantity, price):
+    order = {
+        'id': id,
+        'type': type,
+        'quantity': quantity,
+        'price': price
+    }
+    return order
+
+def send_order(order):
+    order = json.dumps(order)
+    producer.send(topic = "orders", value = order.encode('utf-8'))
+
+def other_type(type):
+    if type == "BUY":
+        return "SELL"
+    elif type == "SELL":
+        return "BUY"
+    else:
+        return ""
 
 def consume_prices():
     consumer1.subscribe(topics=["prices"])
     for msg in consumer1:
+        req = json.loads(msg.value.decode('utf-8'))
+        price = int(req['price'])
+        prices.append(price)
+        next_price = predict_next_price()
+        if next_price > price + delta:
+            id = generate_id()
+            order = create_order(id, "BUY", 1, price)
+            send_order(order)
+            opening_orders.add(id)
+            all_orders[id] = order
+            producer.flush()
+        elif next_price < price - delta:
+            id = generate_id()
+            order = create_order(id, "SELL", 1, price)
+            send_order(order)
+            opening_orders.add(id)
+            all_orders[id] = order
+            producer.flush()
         time.sleep(0.001)
-        pass # Get a price, make a prediction, send an order if we want
 
 def consume_orders_status():
     consumer2.subscribe(topics=["orders_status"])
     for msg in consumer2:
+        req = json.loads(msg.value.decode('utf-8'))
+        id = req['id']
+        status = req['status']
+        type = req['type']
+        quantity = req['quantity']
+        current_price = prices[-1]
+
+        if status == 'CONFIRMED' and id in opening_orders:
+            opening_orders.discard(id)
+            new_id = generate_id()
+            order = create_order(new_id, other_type(type), quantity, current_price)
+            send_order(order)
+            closing_orders.add(new_id)
+            all_orders[new_id] = order
+            producer.flush()
+        elif status == 'CANCELLED' and id in opening_orders:
+            del all_orders[id]
+            opening_orders.discard(id)
+        elif status == 'CONFIRMED' and id in closing_orders:
+            closing_orders.discard(id)
+        elif status == 'CANCELLED' and id in closing_orders:
+            closing_orders.discard(id)
+            del all_orders[id]
+            new_id = generate_id()
+            order = create_order(new_id, type, quantity, current_price)
+            send_order(order)
+            closing_orders.add(new_id)
+            all_orders[new_id] = order
+            producer.flush()
         time.sleep(0.001)
-        pass # Update the state
 
 if __name__ == "__main__":
     thread1 = threading.Thread(target=consume_prices)
