@@ -67,9 +67,6 @@ def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
               f"status code: {response.status_code}")
 
 
-# TODO Main logic has to be changed
-# TODO We need to delete and create database again if it exists
-# TODO Check if status is confirmed, ignore rejected orders
 if __name__ == "__main__":
     DB_NAME = "orders_database"
     create_database(DB_NAME)
