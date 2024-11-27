@@ -69,7 +69,6 @@ if __name__ == '__main__':
                 'type': order_type,
                 'quantity': quantity,
                 'price': price,
-                # No profit on buy order
                 'profit': total_profit[bot] + net_position[bot] * price
             })
         elif order_type == "sell":
