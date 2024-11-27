@@ -59,6 +59,8 @@ if __name__ == '__main__':
         quantity = order['quantity']
         price = order['price']
         bot = order_id.split("_")[0]
+        if not bot.startswith("bot"):
+            continue
 
         if order_type == "buy":
             net_position[bot] += quantity  # Add to the position
