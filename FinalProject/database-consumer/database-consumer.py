@@ -14,23 +14,38 @@ COUCHDB_URL = f"http://{db_ip}:5984"
 USERNAME = "team"
 PASSWORD = "cloudcomputing"
 
+
 def database_exists(db_name):
     response = requests.get(f"{COUCHDB_URL}/{db_name}",
                             auth=(USERNAME, PASSWORD))
     return response.status_code == 200
 
-def create_database(db_name):
-    if not database_exists(db_name):
-        response = requests.put(
+
+def delete_database(db_name):
+    if database_exists(db_name):
+        response = requests.delete(
             f"{COUCHDB_URL}/{db_name}", auth=(USERNAME, PASSWORD))
-        if response.status_code == 201:
-            print(f"Database '{db_name}' created successfully.")
-        elif response.status_code == 412:
-            print(f"Database '{db_name}' already exists.")
+        if response.status_code == 200:
+            print(f"Database '{db_name}' deleted successfully.")
+        elif response.status_code == 404:
+            print(f"Database '{db_name}' does not exist.")
         else:
-            print(f"Error creating database: {response.json()}")
+            print(f"Error deleting database: {response.json()}")
     else:
+        print(f"Database '{db_name}' does not exist.")
+
+
+def create_database(db_name):
+    delete_database(db_name)
+
+    response = requests.put(
+        f"{COUCHDB_URL}/{db_name}", auth=(USERNAME, PASSWORD))
+    if response.status_code == 201:
+        print(f"Database '{db_name}' created successfully.")
+    elif response.status_code == 412:
         print(f"Database '{db_name}' already exists.")
+    else:
+        print(f"Error creating database: {response.json()}")
 
 
 def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
@@ -50,6 +65,7 @@ def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
     else:
         print(f"Error inserting document: {response.json()}",
               f"status code: {response.status_code}")
+
 
 # TODO Main logic has to be changed
 # TODO We need to delete and create database again if it exists
