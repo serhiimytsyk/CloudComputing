@@ -1,23 +1,24 @@
-import os 
 import time
 import json
 import sys
 import secrets
 import string
+from statsmodels.tsa.arima.model import ARIMA
+import threading
+import warnings
+import pandas as pd
+from kafka import KafkaProducer
+from kafka import KafkaConsumer
 
 if sys.version_info >= (3, 12, 0):
     import six
     sys.modules['kafka.vendor.six.moves'] = six.moves
 
-import random
-import threading
+warnings.filterwarnings("ignore", message="Non-stationary starting autoregressive parameters")
+warnings.filterwarnings("ignore", message="Non-invertible starting MA parameters")
+warnings.filterwarnings("ignore", message="Maximum Likelihood optimization failed to")
 
-import tensorflow as tf
-import pandas as pd
-import numpy as np
 
-from kafka import KafkaProducer
-from kafka import KafkaConsumer
 
 producer = KafkaProducer(bootstrap_servers = 'kafka:9092',
                          acks = 0,
@@ -38,11 +39,22 @@ def generate_id():
     generated_id = ''.join(secrets.choice(characters) for _ in range(10))
     return bot_id + generated_id
 
-# TODO Load a pre-trained model / models and make predictions
-prices = []
+p, d, q = 2, 1, 1
 
-def predict_next_price():
-    return 0
+l = 50
+
+values = []
+
+def predict_next_price(next_value, index):
+    values.append(next_value)
+
+    if index < l: 
+        return None
+    
+    data = pd.Series(values)
+    new_model = ARIMA(data, order=(p, d, q))
+    model = new_model.fit()
+    return model.forecast(steps=1).iloc[0]
 
 opening_orders = set()
 closing_orders = set()
@@ -73,11 +85,15 @@ def other_type(type):
 
 def consume_prices():
     consumer1.subscribe(topics=['prices'])
+    idx = 0
     for msg in consumer1:
         req = json.loads(msg.value.decode('utf-8'))
         price = float(req.get('price'))
-        prices.append(price)
-        next_price = predict_next_price()
+        next_price = predict_next_price(price, idx)
+        idx += 1
+        if next_price == None:
+            continue
+
         if next_price > price + delta:
             id = generate_id()
             order = create_order(id, 'BUY', 1, price)
@@ -107,7 +123,7 @@ def consume_orders_status():
             opening_orders.discard(id)
             new_id = generate_id()
             time.sleep(1)
-            current_price = prices[-1]
+            current_price = values[-1]
             order = create_order(new_id, other_type(type), quantity, current_price)
             send_order(order)
             closing_orders.add(new_id)
@@ -121,7 +137,7 @@ def consume_orders_status():
             closing_orders.discard(id)
             new_id = generate_id()
             time.sleep(1)
-            current_price = prices[-1]
+            current_price = values[-1]
             order = create_order(new_id, type, quantity, current_price)
             send_order(order)
             closing_orders.add(new_id)
