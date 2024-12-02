@@ -33,7 +33,7 @@ sudo docker build -t iot-producer ./iot_producer
 sudo docker tag iot-producer 192.168.1.81:5000/team17/iot-producer
 sudo docker push 192.168.1.81:5000/team17/iot-producer
 
-sudo docker build -f ./spark_dockerfile -t my-spark .
+sudo docker build -f ./Spark/spark_dockerfile -t my-spark .
 sudo docker tag my-spark:latest 192.168.1.81:5000/my-spark
 sudo docker push 192.168.1.81:5000/team17/my-spark
 

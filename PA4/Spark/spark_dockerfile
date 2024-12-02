@@ -24,9 +24,9 @@ RUN apt-get -y update && apt-get install -y net-tools wget dnsutils iputils-ping
 RUN wget https://apache.osuosl.org/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz
 RUN zcat spark-3.1.1-bin-hadoop3.2.tgz | tar xpof -
 
-COPY spark-env.sh /spark-3.1.1-bin-hadoop3.2/conf/
-COPY spark-worker.conf /spark-3.1.1-bin-hadoop3.2/conf/
-COPY spark-driver.conf /spark-3.1.1-bin-hadoop3.2/conf/
+COPY ./Spark/spark-env.sh /spark-3.1.1-bin-hadoop3.2/conf/
+COPY ./Spark/spark-worker.conf /spark-3.1.1-bin-hadoop3.2/conf/
+COPY ./Spark/spark-driver.conf /spark-3.1.1-bin-hadoop3.2/conf/
 #COPY alice_in_wonderland.txt /
 
 # Now we set environment variable that we will need in the container at runtime
