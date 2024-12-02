@@ -15,7 +15,7 @@
 sudo docker tag wurstmeister/kafka 192.168.1.81:5000/team17/kafka
 sudo docker push 192.168.1.81:5000/team17/kafka
 
-sudo docker tag couchdb 192.168.1.81:5000/team17/database
+sudo docker tag team17/couchdb 192.168.1.81:5000/team17/database
 sudo docker push 192.168.1.81:5000/team17/database
 
 sudo docker tag wurstmeister/zookeeper 192.168.1.81:5000/team17/zookeeper
