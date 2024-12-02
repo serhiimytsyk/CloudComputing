@@ -33,15 +33,15 @@ sudo docker build -t iot-producer ./iot_producer
 sudo docker tag iot-producer 192.168.1.81:5000/team17/iot-producer
 sudo docker push 192.168.1.81:5000/team17/iot-producer
 
-sudo docker build -t team17-spark ./spark_dockerfile 
-sudo docker tag team17-spark:latest 192.168.1.81:5000/team17-spark
-sudo docker push 192.168.1.81:5000/team17/team17-spark
+sudo docker build -t my-spark ./spark_dockerfile 
+sudo docker tag my-spark:latest 192.168.1.81:5000/my-spark
+sudo docker push 192.168.1.81:5000/team17/my-spark
 
-kubectl apply -f spark-master-svc.yaml
-kubectl apply -f spark-driver.svc.yaml
-kubectl apply -f spark-master-deploy.yaml
-kubectl apply -f spark-worker-deploy.yaml
-kubectl apply -f spark-driver-deploy.yaml
+kubectl apply -f ./Spark/spark-master-svc.yaml
+kubectl apply -f ./Spark/spark-driver.svc.yaml
+kubectl apply -f ./Spark/spark-master-deploy.yaml
+kubectl apply -f ./Spark/spark-worker-deploy.yaml
+kubectl apply -f ./Spark/spark-driver-deploy.yaml
 
 kubectl apply -f ./Deployment/database-deployment.yaml
 kubectl apply -f ./Deployment/db-consumer-deployment.yaml

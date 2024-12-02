@@ -28,7 +28,7 @@ spec:                     # This is the specification
         kubernetes.io/hostname: kubemaster
       containers:
         - name: spark-driver       # used to name container
-          image: 192.168.1.81:5000/team17-spark:latest   # this is the image in private registry
+          image: 192.168.1.81:5000/my-spark:latest   # this is the image in private registry
           imagePullPolicy: Always  # This forces the node to pull the image
           env:
             - name: SPARK_LOCAL_IP
