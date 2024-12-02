@@ -1,4 +1,3 @@
-import os 
 import time
 import json
 import sys
@@ -7,12 +6,7 @@ if sys.version_info >= (3, 12, 0):
     import six
     sys.modules['kafka.vendor.six.moves'] = six.moves
 
-import random
 import threading
-
-import tensorflow as tf
-import pandas as pd
-import numpy as np
 
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
@@ -48,6 +42,7 @@ def send_order_status(id, status, type, quantity, price):
 time.sleep(30)
 
 def produce():
+    global current_index
     for i in range(len(prices)):
         current_index = i
         price_info = {
