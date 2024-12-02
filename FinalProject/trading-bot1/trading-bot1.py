@@ -47,7 +47,7 @@ def predict_next_price():
 opening_orders = set()
 closing_orders = set()
 
-delta = 0.009
+delta = 0.01
 
 def create_order(id, type, quantity, price):
     order = {

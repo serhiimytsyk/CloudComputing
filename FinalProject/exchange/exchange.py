@@ -29,7 +29,7 @@ with open('./2024-11-20.txt', 'r') as file:
     content = file.read()
     prices = list(map(float, content.split()))
 
-delta = 0.004
+delta = 0.001
 eps = 0.00001
 current_index = 0
 
