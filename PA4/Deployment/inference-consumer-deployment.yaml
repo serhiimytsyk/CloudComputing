@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: inference-consumer
+  namespace: team17
   labels:
     app: inference-consumer
 spec:
@@ -16,4 +17,4 @@ spec:
     spec:
       containers:
       - name: inference-consumer
-        image: 192.168.5.173:5000/inference-consumer
+        image: 192.168.1.81:5000/team17/inference-consumer

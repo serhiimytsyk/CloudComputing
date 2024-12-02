@@ -70,8 +70,9 @@ for msg in consumer:
     data = np.expand_dims(data, axis=0)
     outputs = model.predict(data)
     prediction = int(np.argmax(outputs, axis=1)[0])
-    print('predicted:', prediction, '    actual:', req['GroundTruth'])
-    doc = {'ID': req['ID'], 'prediction': prediction}
+    is_correct = int(prediction == req['GroundTruth'])
+    print('predicted:', prediction, '    actual:', req['GroundTruth'], '    correct:', is_correct)
+    doc = {'ID': req['ID'], 'prediction': prediction, 'IsCorrect': is_correct}
     producer.send("prediction", value=json.dumps(doc).encode('utf-8'))
     producer.flush()
     time.sleep(0.001)
