@@ -21,16 +21,16 @@ RUN apt-get -y update && apt-get install -y net-tools wget dnsutils iputils-ping
 
 # Here we are hardcoding the download mirror and the spark version. I am sure
 # there will be another and better way to do this
-RUN wget https://apache.osuosl.org/spark/spark-3.1.1/spark-3.1.1-bin-hadoop3.2.tgz
-RUN zcat spark-3.1.1-bin-hadoop3.2.tgz | tar xpof -
+RUN wget https://dlcdn.apache.org/spark/spark-3.5.3/spark-3.5.3-bin-hadoop3.tgz
+RUN zcat spark-3.5.3-bin-hadoop3.tgz | tar xpof -
 
-COPY ./Spark/spark-env.sh /spark-3.1.1-bin-hadoop3.2/conf/
-COPY ./Spark/spark-worker.conf /spark-3.1.1-bin-hadoop3.2/conf/
-COPY ./Spark/spark-driver.conf /spark-3.1.1-bin-hadoop3.2/conf/
+COPY ./Spark/spark-env.sh /spark-3.5.3-bin-hadoop3.tgz/conf/
+COPY ./Spark/spark-worker.conf /spark-3.5.3-bin-hadoop3.tgz/conf/
+COPY ./Spark/spark-driver.conf /spark-3.5.3-bin-hadoop3.tgz/conf/
 #COPY alice_in_wonderland.txt /
 
 # Now we set environment variable that we will need in the container at runtime
-ENV SPARK_HOME=/spark-3.1.1-bin-hadoop3.2
+ENV SPARK_HOME=/spark-3.5.3-bin-hadoop3.tgz
 ENV PATH=${PATH}:${SPARK_HOME}/sbin:${SPARK_HOME}/bin
 
 # We do not start any command here but expect the docker run
