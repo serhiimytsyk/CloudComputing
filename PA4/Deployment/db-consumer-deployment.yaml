@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: database-consumer
+  namespace: team17
   labels:
     app: database-consumer
 spec:

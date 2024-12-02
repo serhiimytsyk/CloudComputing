@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: iot-producer1
+  namespace: team17
 spec:
   template:
     metadata:
