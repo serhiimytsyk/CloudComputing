@@ -8,6 +8,8 @@ if sys.version_info >= (3, 12, 0):
     sys.modules['kafka.vendor.six.moves'] = six.moves
 from kafka import KafkaConsumer  # consumer of events
 
+from pyspark.sql import SparkSession
+
 # CouchDB configuration
 db_ip = "database"
 COUCHDB_URL = f"http://{db_ip}:5984"
@@ -59,12 +61,34 @@ def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
     else:
         print(f"Error inserting document: {response.json()}",
               f"status code: {response.status_code}")
+        
+def get_data(db_name: str):
+    get_response = requests.get(f"{COUCHDB_URL}/{db_name}/{doc['_id']}", auth=(USERNAME, PASSWORD))
+    if get_response.status_code == 200:
+        return [row['doc'] for row in get_response.json().get('rows', [])]
+    else:
+        return []
+    
+def do_map_reduce(data: list):
+    spark = SparkSession.builder.appName("MapReduceInference").getOrCreate()
+    rdd = spark.sparkContext.parallelize(data)
 
+    wrong_counts = (
+        rdd.filter(lambda x: x['IsCorrect'] == 0)
+            .map(lambda x: (x['ID'].split('_')[0], 1))
+            .reduceByKey(lambda a, b: a + b)
+    )
+    
+    total = wrong_counts.collect()
+    spark.stop()
+    return total
 
 # Main logic
 if __name__ == "__main__":
     DB_NAME = "images_database"
     create_database(DB_NAME)
+    data = get_data(DB_NAME)
+    total = do_map_reduce(data)
 
     consumer = KafkaConsumer(bootstrap_servers="kafka:9092")
     consumer.subscribe(topics=["images", "prediction"])
@@ -87,3 +111,6 @@ if __name__ == "__main__":
                 time.sleep(0.001)
             except KeyError:
                 print("json object does not have _id key.")
+
+    for producer, count in total:
+        print(f"Producer: {producer}, Incorrect Inferences: {count}")
