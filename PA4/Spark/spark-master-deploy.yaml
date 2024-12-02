@@ -9,6 +9,7 @@ apiVersion: apps/v1
 kind: Deployment         # We are testing the Deployment resource
 metadata:
   name: spark-master-deploy  # This will run the Spark master
+  namespace: team17
 spec:                     # This is the specification 
   replicas: 1             # only 1 replica of master
   selector:
