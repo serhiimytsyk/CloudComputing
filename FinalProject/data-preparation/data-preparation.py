@@ -21,7 +21,7 @@ df['datetime'] = pd.to_datetime(df['timestamp'], unit = 'ms')
 df['date'] = df['datetime'].dt.date
 df['time'] = df['datetime'].dt.time
 df = df.drop(columns = ['otc', 'transactions', 'open', 'high', 'low', 'close', 'volume', 'vwap'])
-df = df[(df['time'] >= time(8, 0, 0)) & (df['time'] < time(18, 0, 0))]
+df = df[(df['time'] >= time(8, 0, 0)) & (df['time'] < time(20, 0, 0))]
 
 date_to_prices = {}
 
