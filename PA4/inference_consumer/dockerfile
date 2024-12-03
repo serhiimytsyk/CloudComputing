@@ -15,8 +15,8 @@ RUN python3 -m venv /app/venv
 
 ENV PATH="/app/venv/bin:$PATH"
 # Activate the virtual environment and install necessary Python packages via pip
-# RUN pip install --upgrade pip && \
-#     pip install kafka-python tensorflow pandas numpy opencv-python six
+RUN pip install --upgrade pip && \
+    pip install kafka-python tensorflow pandas numpy opencv-python six
 
 # Copy the Python consumer script into the Docker container
 COPY inference_consumer.py /app/inference_consumer_docker.py
