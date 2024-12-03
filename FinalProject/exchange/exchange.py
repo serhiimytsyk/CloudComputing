@@ -51,6 +51,7 @@ def produce():
         price_info = json.dumps(price_info)
         producer.send(topic = 'prices', value = price_info.encode('utf-8'))
         producer.flush()
+        print('Current price is', prices[i])
         time.sleep(1)
 
 def consume():
