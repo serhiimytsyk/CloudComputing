@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: kafka
+  namespace: team17
   labels:
     app: kafka
 spec:

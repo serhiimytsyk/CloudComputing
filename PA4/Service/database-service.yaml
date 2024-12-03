@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: database
+  namespace: team17
   labels:
     app: database
 spec:

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: kafka
-        image: 192.168.1.81:5000/team17/kafka
+        image: 192.168.1.81:5000/team17/kafka:latest
         env:
           - name: KAFKA_LISTENERS
             value: "PLAINTEXT://0.0.0.0:9092"
