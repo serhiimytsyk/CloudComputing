@@ -7,7 +7,7 @@
 # both the master and workers
 #
 # Use Ubuntu (latest, e.g. 20.04)
-FROM ubuntu:latest
+FROM ubuntu:24.10
 #
 # Now install the needed packages.
 RUN apt-get -y update && apt-get install -y default-jdk python3
