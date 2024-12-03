@@ -32,7 +32,7 @@ consumer2 = KafkaConsumer(bootstrap_servers = 'kafka:9092',
 
 bot_id = 'bot1_'
 
-time.sleep(1)
+time.sleep(5)
 
 def generate_id():
     characters = string.ascii_letters + string.digits

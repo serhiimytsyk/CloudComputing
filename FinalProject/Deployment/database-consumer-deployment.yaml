@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-consumer
+  labels:
+    app: database-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database-consumer
+  template:
+    metadata:
+      labels:
+        app: database-consumer
+    spec:
+      containers:
+      - name: database-consumer
+        image: 192.168.5.245:5000/database-consumer

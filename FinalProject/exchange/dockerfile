@@ -30,4 +30,4 @@ WORKDIR /app
 EXPOSE 9092
 
 # Command to run the Python script within the virtual environment
-CMD ["/app/venv/bin/python", "/app/exchange-docker.py"]
+#CMD ["/app/venv/bin/python", "/app/exchange-docker.py"]

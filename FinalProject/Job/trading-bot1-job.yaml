@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: trading-bot1
+spec:
+  template:
+    metadata:
+      labels:
+        app: trading-bot1
+    spec:
+      containers:
+      - name: exchange
+        image: 192.168.5.245:5000/trading-bot1
+        imagePullPolicy: Always
+        command: ["sh", "-c"]
+        args: ["python3 trading-bot1-docker.py"]
+      restartPolicy: Never

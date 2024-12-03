@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database
+  labels:
+    app: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - name: database
+          image: 192.168.5.245:5000/database
+          ports:
+            - containerPort: 5984
+          env:
+            - name: COUCHDB_USER
+              value: "team"
+            - name: COUCHDB_PASSWORD
+              value: "cloudcomputing"

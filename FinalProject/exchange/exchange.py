@@ -39,7 +39,7 @@ def send_order_status(id, status, type, quantity, price):
     producer.send(topic = 'orders_status', value = status.encode('utf-8'))
     producer.flush()
 
-time.sleep(30)
+time.sleep(10)
 
 def produce():
     global current_index

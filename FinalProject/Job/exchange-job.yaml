@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: exchange
+spec:
+  template:
+    metadata:
+      labels:
+        app: exchange
+    spec:
+      containers:
+      - name: exchange
+        image: 192.168.5.245:5000/exchange
+        imagePullPolicy: Always
+        command: ["sh", "-c"]
+        args: ["python3 exchange-docker.py"]
+      restartPolicy: Never
