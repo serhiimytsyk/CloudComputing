@@ -31,11 +31,3 @@ spec:
             value: "9092"
         ports:
           - containerPort: 9092
-        volumeMounts:
-          - name: log4j-config
-            mountPath: /opt/kafka/custom-config/log4j.properties
-            subPath: log4j.properties
-      volumes:
-        - name: log4j-config
-          configMap:
-            name: log4j-config
