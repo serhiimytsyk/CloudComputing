@@ -1,14 +1,11 @@
 import time
 import json
-import sys
+#import sys
 
-if sys.version_info >= (3, 12, 0):
-    import six
-    sys.modules['kafka.vendor.six.moves'] = six.moves
-
-from kafka import KafkaProducer
-from kafka import KafkaConsumer
-
+#if sys.version_info >= (3, 12, 0):
+##    import six
+#    sys.modules['kafka.vendor.six.moves'] = six.moves
+#
 import secrets
 import string
 from statsmodels.tsa.arima.model import ARIMA
@@ -16,9 +13,16 @@ import threading
 import warnings
 import pandas as pd
 
-warnings.filterwarnings("ignore", message="Non-stationary starting autoregressive parameters")
-warnings.filterwarnings("ignore", message="Non-invertible starting MA parameters")
-warnings.filterwarnings("ignore", message="Maximum Likelihood optimization failed to")
+print('0')
+
+from kafka import KafkaProducer
+from kafka import KafkaConsumer
+
+print('1')
+
+warnings.filterwarnings('ignore', message='Non-stationary starting autoregressive parameters')
+warnings.filterwarnings('ignore', message='Non-invertible starting MA parameters')
+warnings.filterwarnings('ignore', message='Maximum Likelihood optimization failed to')
 
 
 
@@ -33,6 +37,8 @@ consumer2 = KafkaConsumer(bootstrap_servers = 'kafka:9092',
                          api_version = (0, 11, 5), consumer_timeout_ms = 150000)
 
 bot_id = 'bot1_'
+
+print('2')
 
 time.sleep(5)
 
@@ -85,8 +91,11 @@ def other_type(type):
         return 'BUY'
     else:
         return ''
+    
+print('3')
 
 def consume_prices():
+    print('4')
     consumer1.subscribe(topics=['prices'])
     idx = 0
     for msg in consumer1:
@@ -111,6 +120,7 @@ def consume_prices():
         time.sleep(0.001)
 
 def consume_orders_status():
+    print('5')
     consumer2.subscribe(topics=['orders_status'])
     for msg in consumer2:
         req = json.loads(msg.value.decode('utf-8'))
