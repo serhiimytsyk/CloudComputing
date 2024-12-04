@@ -6,14 +6,15 @@ if sys.version_info >= (3, 12, 0):
     import six
     sys.modules['kafka.vendor.six.moves'] = six.moves
 
+from kafka import KafkaProducer
+from kafka import KafkaConsumer
+
 import secrets
 import string
 from statsmodels.tsa.arima.model import ARIMA
 import threading
 import warnings
 import pandas as pd
-from kafka import KafkaProducer
-from kafka import KafkaConsumer
 
 warnings.filterwarnings("ignore", message="Non-stationary starting autoregressive parameters")
 warnings.filterwarnings("ignore", message="Non-invertible starting MA parameters")

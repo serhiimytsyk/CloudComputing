@@ -16,7 +16,7 @@ RUN python3 -m venv /app/venv
 ENV PATH="/app/venv/bin:$PATH"
 # Activate the virtual environment and install necessary Python packages via pip
 RUN pip install --upgrade pip && \
-    pip install kafka-python tensorflow statsmodels pandas numpy opencv-python six
+    pip install kafka-python pandas numpy opencv-python six statsmodels
 
 # Copy the Python consumer script into the Docker container
 COPY trading-bot1.py /app/trading-bot1-docker.py
