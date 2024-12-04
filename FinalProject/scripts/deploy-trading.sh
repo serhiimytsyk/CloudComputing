@@ -1,11 +1,11 @@
 sudo docker rmi -f $(sudo docker images -q)
 sudo sleep 5
-sudo kubectl delete job exchange 
-sudo kubectl delete job trading-bot1
-sudo kubectl delete deployment database 
-sudo kubectl delete deployment database-consumer 
-sudo kubectl delete deployment zookeeper 
-sudo kubectl delete statefulset kafka
+#sudo kubectl delete job exchange 
+#sudo kubectl delete job trading-bot1
+#sudo kubectl delete deployment database 
+#sudo kubectl delete deployment database-consumer 
+#sudo kubectl delete deployment zookeeper 
+#sudo kubectl delete statefulset kafka
 sudo sleep 3
 sudo docker pull wurstmeister/kafka
 sudo docker tag wurstmeister/kafka 192.168.5.245:5000/kafka
