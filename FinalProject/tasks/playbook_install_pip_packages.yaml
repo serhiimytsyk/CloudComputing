@@ -30,11 +30,6 @@
       name: kafka-python
       state: present
 
-  - name: Install Kafka (kafka-python)
-    pip:
-      name: kafka
-      state: present
-
   - name: Install Yfinance
     pip:
       name: yfinance
