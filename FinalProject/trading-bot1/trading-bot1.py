@@ -68,6 +68,7 @@ def create_order(id, type, quantity, price):
         'quantity': quantity,
         'price': price
     }
+    print('We', type, quantity, 'of stock at', price)
     return order
 
 def send_order(order):
