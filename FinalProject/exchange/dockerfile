@@ -21,7 +21,7 @@ RUN pip install --upgrade pip && \
 
 # Copy the Python script into the Docker container
 COPY exchange.py /app/exchange-docker.py
-COPY ../data-preparation/2024-11-20.txt /app/2024-11-20.txt
+COPY 2024-11-20.txt /app/2024-11-20.txt
 RUN mkdir -p /app/output
 # Set the working directory
 WORKDIR /app
