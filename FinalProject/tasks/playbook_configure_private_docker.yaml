@@ -9,7 +9,7 @@
       path: /etc/containerd/config.toml
       state: present
       insertafter: '^\s*\[plugins."io.containerd.grpc.v1.cri".registry.mirrors]'
-      line: '        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."192.168.5.173:5000"] endpoint=["http://192.168.5.173:5000"]'
+      line: '        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."192.168.5.245:5000"] endpoint=["http://192.168.5.245:5000"]'
       create: yes
 
   - name: Restart containerd
