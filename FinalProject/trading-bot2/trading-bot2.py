@@ -42,6 +42,7 @@ ema = 0
 
 
 def predict_next_price(next_value, index):
+    global ema
     values.append(next_value)
     if ema == 0:
         ema = next_value
