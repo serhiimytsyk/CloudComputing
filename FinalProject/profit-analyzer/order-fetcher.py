@@ -52,7 +52,7 @@ if __name__ == '__main__':
     aggregated_data = defaultdict(list)
 
     documents = get_all_documents(COUCHDB_URL, DB_NAME, USERNAME, PASSWORD)
-    output_content = defaultdict(str)
+    output_content = defaultdict(list)
     for doc in documents:
         print(doc)
         order = doc['doc']
@@ -61,6 +61,8 @@ if __name__ == '__main__':
         quantity = order['quantity']
         price = order['price']
         bot = order_id.split("_")[0]
+        confirmation_time = int(order['confirmation_time'])
+
         if not bot.startswith("bot"):
             continue
 
@@ -86,9 +88,14 @@ if __name__ == '__main__':
                 'price': price,
                 'profit': total_profit[bot] + net_position[bot] * price
             })
-            output_content[bot] += f"{net_position[bot]},{total_profit[bot] + net_position[bot] * price},{price}\n"
+        output_content[bot].append(
+            (confirmation_time, net_position[bot], total_profit[bot], price))
 
-    print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n")
+    for bot in output_content.keys():
+        output_content[bot].sort()
+
+    print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {
+          'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n")
     print("-" * 70)  # Dash line under the header
 
     for bot, aggr in aggregated_data.items():
@@ -96,8 +103,10 @@ if __name__ == '__main__':
         print(
             f"{bot:<10} {total_profit:<10} {net_position[bot]:<20} {buy_qty[bot]:<15} {sell_qty[bot]:<15}")
 
-    for bot, txt in output_content.items():
+    for bot, lst in output_content.items():
+        txt = "\n".join([f"{position},{profit},{price}" for (
+            confirmation_time, position, profit, price) in lst])
         with open(f"./{bot}.txt", "w") as f:
-            f.write("0,0,0\n" + txt)
+            f.write("position,balance,price\n" + txt)
 
     # create_database(DB_NAME)
