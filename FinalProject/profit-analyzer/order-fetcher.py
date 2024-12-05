@@ -52,6 +52,7 @@ if __name__ == '__main__':
     aggregated_data = defaultdict(list)
 
     documents = get_all_documents(COUCHDB_URL, DB_NAME, USERNAME, PASSWORD)
+    documents1 = []
     output_content = defaultdict(list)
     for doc in documents:
         print(doc)
@@ -68,6 +69,17 @@ if __name__ == '__main__':
 
         if not bot.startswith("bot"):
             continue
+
+        documents1.append({"_id":order_id, "type":order_type, "quantity":quantity,"price":price, "confirmation_time":confirmation_time})
+
+    sorted_documents = sorted(documents1, key=lambda x: x['confirmation_time'])
+    for order in sorted_documents:
+        order_id = order['_id']
+        order_type = order['type']
+        quantity = order['quantity']
+        price = order['price']
+        bot = order_id.split("_")[0]
+        confirmation_time = int(order['confirmation_time'])
 
         if order_type == "BUY":
             net_position[bot] += quantity  # Add to the position
@@ -92,13 +104,13 @@ if __name__ == '__main__':
                 'profit': total_profit[bot] + net_position[bot] * price
             })
         output_content[bot].append(
-            (confirmation_time, net_position[bot], total_profit[bot], price))
+            (net_position[bot], total_profit[bot], price))
 
-    for bot in output_content.keys():
-        output_content[bot].sort()
+    # for bot in output_content.keys():
+    #     output_content[bot].sort()
 
-    print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {
-          'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n")
+    print(f"""{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {
+          'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n""")
     print("-" * 70)  # Dash line under the header
 
     for bot, aggr in aggregated_data.items():
@@ -108,7 +120,7 @@ if __name__ == '__main__':
 
     for bot, lst in output_content.items():
         txt = "\n".join([f"{position},{profit},{price}" for (
-            confirmation_time, position, profit, price) in lst])
+            position, profit, price) in lst])
         with open(f"./{bot}.txt", "w") as f:
             f.write("position,balance,price\n" + txt)
 
