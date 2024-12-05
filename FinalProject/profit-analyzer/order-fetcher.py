@@ -52,6 +52,7 @@ if __name__ == '__main__':
     aggregated_data = defaultdict(list)
 
     documents = get_all_documents(COUCHDB_URL, DB_NAME, USERNAME, PASSWORD)
+    output_content = defaultdict(str)
     for doc in documents:
         print(doc)
         order = doc['doc']
@@ -85,12 +86,18 @@ if __name__ == '__main__':
                 'price': price,
                 'profit': total_profit[bot] + net_position[bot] * price
             })
+            output_content[bot] += f"{net_position[bot]},{total_profit[bot]},{price}\n"
 
-    print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}")
+    print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n")
     print("-" * 70)  # Dash line under the header
 
     for bot, aggr in aggregated_data.items():
         total_profit = aggr[-1]['profit']
         print(
             f"{bot:<10} {total_profit:<10} {net_position[bot]:<20} {buy_qty[bot]:<15} {sell_qty[bot]:<15}")
+
+    for bot, txt in output_content.items():
+        with open(f"./{bot}.txt", "w") as f:
+            f.write("0,0,0\n" + txt)
+
     # create_database(DB_NAME)
