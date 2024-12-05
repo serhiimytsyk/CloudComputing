@@ -124,8 +124,8 @@ def consume_orders_status():
     print('5')
     consumer2.subscribe(topics=['orders_status'])
     for msg in consumer2:
-        print(msg)
         req = json.loads(msg.value.decode('utf-8'))
+        print(req)
         id = req.get('id')
         if (not id) or (not id.startswith(bot_id)):
             continue

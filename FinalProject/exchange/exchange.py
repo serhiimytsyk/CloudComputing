@@ -36,15 +36,15 @@ current_index = 0
 print('3')
 
 def send_order_status(id, status, type_, quantity, price):
-    status = {
+    order_status = {
         'id': id,
         'status': status,
         'type': type_,
         'quantity': quantity,
         'price': price
     }
-    status = json.dumps(status)
-    producer.send(topic = 'orders_status', value = status.encode('utf-8'))
+    order_status = json.dumps(order_status)
+    producer.send(topic = 'orders_status', value = order_status.encode('utf-8'))
     print('Order', id, 'status is', status, 'for', type_, quantity, 'at', price, 'while current price is', prices[current_index])
     producer.flush()
 
