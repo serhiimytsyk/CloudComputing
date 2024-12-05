@@ -31,10 +31,10 @@ producer = KafkaProducer(bootstrap_servers = 'kafka:9092',
                          api_version = (0, 11, 5))
 
 consumer1 = KafkaConsumer(bootstrap_servers = 'kafka:9092',
-                         api_version = (0, 11, 5), consumer_timeout_ms = 15000)
+                         api_version = (0, 11, 5), consumer_timeout_ms = 600000)
 
 consumer2 = KafkaConsumer(bootstrap_servers = 'kafka:9092',
-                         api_version = (0, 11, 5), consumer_timeout_ms = 150000)
+                         api_version = (0, 11, 5), consumer_timeout_ms = 600000)
 
 bot_id = 'bot1_'
 
@@ -69,14 +69,14 @@ closing_orders = set()
 
 delta = 0.01
 
-def create_order(id, type, quantity, price):
+def create_order(id, type_, quantity, price):
     order = {
         'id': id,
-        'type': type,
+        'type': type_,
         'quantity': quantity,
         'price': price
     }
-    print('We', type, quantity, 'of stock at', price)
+    print('We', type_, quantity, 'of stock at', price)
     return order
 
 def send_order(order):
@@ -84,10 +84,10 @@ def send_order(order):
     producer.send(topic = 'orders', value = order.encode('utf-8'))
     producer.flush()
 
-def other_type(type):
-    if type == 'BUY':
+def other_type(type_):
+    if type_ == 'BUY':
         return 'SELL'
-    elif type == 'SELL':
+    elif type_ == 'SELL':
         return 'BUY'
     else:
         return ''
@@ -103,6 +103,7 @@ def consume_prices():
         price = float(req.get('price'))
         next_price = predict_next_price(price, idx)
         idx += 1
+        print('Current price is', price, 'predicted next price is', next_price)
         if next_price == None:
             continue
 
@@ -123,13 +124,14 @@ def consume_orders_status():
     print('5')
     consumer2.subscribe(topics=['orders_status'])
     for msg in consumer2:
+        print(msg)
         req = json.loads(msg.value.decode('utf-8'))
         id = req.get('id')
         if (not id) or (not id.startswith(bot_id)):
             continue
 
         status = req.get('status')
-        type = req.get('type')
+        type_ = req.get('type')
         quantity = int(req.get('quantity'))
 
         if status == 'CONFIRMED' and id in opening_orders:
@@ -137,7 +139,7 @@ def consume_orders_status():
             new_id = generate_id()
             time.sleep(1)
             current_price = values[-1]
-            order = create_order(new_id, other_type(type), quantity, current_price)
+            order = create_order(new_id, other_type(type_), quantity, current_price)
             send_order(order)
             closing_orders.add(new_id)
         elif status == 'CANCELLED' and id in opening_orders:
@@ -151,7 +153,7 @@ def consume_orders_status():
             new_id = generate_id()
             time.sleep(1)
             current_price = values[-1]
-            order = create_order(new_id, type, quantity, current_price)
+            order = create_order(new_id, type_, quantity, current_price)
             send_order(order)
             closing_orders.add(new_id)
 

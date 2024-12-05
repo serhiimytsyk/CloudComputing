@@ -20,7 +20,7 @@ producer = KafkaProducer(bootstrap_servers='kafka:9092',
                          api_version=(0, 11, 5))
 
 consumer = KafkaConsumer(bootstrap_servers='kafka:9092',
-                         api_version=(0, 11, 5), consumer_timeout_ms = 15000)
+                         api_version=(0, 11, 5), consumer_timeout_ms = 600000)
 
 print('2')
 
@@ -35,17 +35,17 @@ current_index = 0
 
 print('3')
 
-def send_order_status(id, status, type, quantity, price):
+def send_order_status(id, status, type_, quantity, price):
     status = {
         'id': id,
         'status': status,
-        'type': type,
+        'type': type_,
         'quantity': quantity,
         'price': price
     }
     status = json.dumps(status)
     producer.send(topic = 'orders_status', value = status.encode('utf-8'))
-    print('Order', id, 'status is', status, 'for', type, quantity, 'at', price, 'while current price is', prices[current_index])
+    print('Order', id, 'status is', status, 'for', type_, quantity, 'at', price, 'while current price is', prices[current_index])
     producer.flush()
 
 time.sleep(10)
@@ -54,13 +54,14 @@ def produce():
     print('4')
     global current_index
     for i in range(len(prices)):
-        current_index = i
         price_info = {
             'price': prices[i]
         }
         price_info = json.dumps(price_info)
         producer.send(topic = 'prices', value = price_info.encode('utf-8'))
         producer.flush()
+        current_index = i
+        print('produce', current_index)
         print('Current price is', prices[i])
         time.sleep(1)
 
@@ -68,25 +69,26 @@ def consume():
     print('5')
     consumer.subscribe(topics=['orders'])
     for msg in consumer:
+        print('consume', current_index)
         req = json.loads(msg.value.decode('utf-8'))
         id = req.get('id')
-        type = req.get('type')
+        type_ = req.get('type')
         quantity = int(req.get('quantity'))
         price = float(req.get('price'))
         current_price = prices[current_index]
-        print('Received order', id, 'for', type, quantity, 'at', price, 'while current price is', prices[current_index])
-        if type == 'BUY':
+        print('Received order', id, 'for', type_, quantity, 'at', price, 'while current price is', prices[current_index])
+        if type_ == 'BUY':
             if price > current_price - eps:
-                send_order_status(id, 'CONFIRMED', type, quantity, current_price + delta)
+                send_order_status(id, 'CONFIRMED', type_, quantity, current_price + delta)
             else:
-                send_order_status(id, 'CANCELLED', type, quantity, price)
-        elif type == 'SELL':
+                send_order_status(id, 'CANCELLED', type_, quantity, price)
+        elif type_ == 'SELL':
             if price < current_price + eps:
-                send_order_status(id, 'CONFIRMED', type, quantity, current_price - delta)
+                send_order_status(id, 'CONFIRMED', type_, quantity, current_price - delta)
             else:
-                send_order_status(id, 'CANCELLED', type, quantity, price)
+                send_order_status(id, 'CANCELLED', type_, quantity, price)
         else:
-            send_order_status(id, 'CANCELLED', type, quantity, price)
+            send_order_status(id, 'CANCELLED', type_, quantity, price)
         time.sleep(0.001)
 
 producer_thread = threading.Thread(target=produce)
