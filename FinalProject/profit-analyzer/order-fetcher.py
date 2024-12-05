@@ -1,12 +1,5 @@
-# Query the database to get all confirmed orders for each bot
-# Save them in a file for each bot
 from collections import defaultdict
 import requests
-import json
-import time
-
-import sys
-
 
 def insert_document(db_name: str, doc: dict, action: str = "post") -> None:
     if action == "post":
@@ -106,9 +99,6 @@ if __name__ == '__main__':
         output_content[bot].append(
             (net_position[bot], total_profit[bot], price))
 
-    # for bot in output_content.keys():
-    #     output_content[bot].sort()
-
     print(f"""{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {
           'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n""")
     print("-" * 70)  # Dash line under the header
@@ -123,5 +113,3 @@ if __name__ == '__main__':
             position, profit, price) in lst])
         with open(f"./{bot}.txt", "w") as f:
             f.write("position,balance,price\n" + txt)
-
-    # create_database(DB_NAME)

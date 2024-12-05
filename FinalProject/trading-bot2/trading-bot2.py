@@ -1,4 +1,4 @@
-# Implement after bot1 is doneimport time
+import time
 import json
 import sys
 
@@ -8,16 +8,9 @@ if sys.version_info >= (3, 12, 0):
     
 import secrets
 import string
-from statsmodels.tsa.arima.model import ARIMA
 import threading
-import warnings
-import pandas as pd
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
-
-warnings.filterwarnings('ignore', message='Non-stationary starting autoregressive parameters')
-warnings.filterwarnings('ignore', message='Non-invertible starting MA parameters')
-warnings.filterwarnings('ignore', message='Maximum Likelihood optimization failed to')
 
 producer = KafkaProducer(bootstrap_servers = 'kafka:9092',
                          acks = 0,
@@ -51,17 +44,6 @@ def predict_next_price(next_value, index):
     else:
         values[-1] = values[-1] * 0.4 + 0.6 * next_value
         return values[-1]
-    # values.append(next_value)
-
-    # if index < l: 
-    #     return None
-    
-    # data = pd.Series(values)
-    # new_model = ARIMA(data, order=(p, d, q))
-    # model = new_model.fit()
-
-    # return 0.6 * next_value + 
-    # return model.forecast(steps=1).iloc[0]
 
 opening_orders = set()
 closing_orders = set()
@@ -161,4 +143,4 @@ thread2.start()
 thread1.join()
 thread2.join()
 
-print('trading bot 1 done')
+print('trading bot 2 done')

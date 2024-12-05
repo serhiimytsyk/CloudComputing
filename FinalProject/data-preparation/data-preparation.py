@@ -12,7 +12,7 @@ ticker = 'AAPL'
 client = RESTClient(api_key = POLYGON_API_KEY)
 
 aggs = []
-for a in client.list_aggs(ticker = ticker, multiplier = 1, timespan = 'minute', from_ = '2024-11-01', to = '2024-11-20', limit = 50000):
+for a in client.list_aggs(ticker = ticker, multiplier = 1, timespan = 'minute', from_ = '2024-11-20', to = '2024-11-20', limit = 50000):
     aggs.append(a)
 
 df = pd.DataFrame(aggs)

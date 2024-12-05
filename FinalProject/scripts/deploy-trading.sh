@@ -10,7 +10,6 @@ sudo docker pull couchdb
 sudo docker tag couchdb 192.168.5.145:5000/database
 sudo docker push 192.168.5.145:5000/database
 
-
 sudo docker build -t trading-bot1 ../trading-bot1
 sudo docker tag trading-bot1 192.168.5.145:5000/trading-bot1
 sudo docker push 192.168.5.145:5000/trading-bot1
@@ -38,5 +37,6 @@ kubectl apply -f ../Service/database-service.yaml
 sleep 30
 kubectl apply -f ../Job/exchange-job.yaml
 kubectl apply -f ../Job/trading-bot1-job.yaml
+kubectl apply -f ../Job/trading-bot2-job.yaml
 
 echo "All services deployed successfully!"

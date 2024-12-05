@@ -8,6 +8,7 @@ kubectl logs -f <pod-name>  # check logs
 cd PA/FinalProject/scripts
 kubectl get pods -A -o wide
 kubectl delete job trading-bot1
+kubectl delete job trading-bot2
 kubectl delete job exchange
 kubectl delete job order-fetcher
 kubectl delete deployment database-consumer
@@ -17,8 +18,11 @@ wait 600 seconds
 bash deploy-order-fetcher.sh
 kubectl get pods -A -o wide 
 kubectl cp default/<pod-name>:/app/bot1.txt ../profit-analyzer/bot1.txt
+kubectl cp default/<pod-name>:/app/bot2.txt ../profit-analyzer/bot2.txt
 sudo nano ../profit-analyzer/bot1.txt
+sudo nano ../profit-analyzer/bot2.txt
 git add ../profit-analyzer/bot1.txt
+git add ../profit-analyzer/bot2.txt
 git commit -m "profits" 
 git push
 ```
