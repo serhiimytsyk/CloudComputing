@@ -45,6 +45,7 @@ def send_order_status(id, status, type, quantity, price):
     }
     status = json.dumps(status)
     producer.send(topic = 'orders_status', value = status.encode('utf-8'))
+    print('Order', id, 'status is', status, 'for', type, quantity, 'at', price, 'while current price is', prices[current_index])
     producer.flush()
 
 time.sleep(10)
@@ -73,6 +74,7 @@ def consume():
         quantity = int(req.get('quantity'))
         price = float(req.get('price'))
         current_price = prices[current_index]
+        print('Received order', id, 'for', type, quantity, 'at', price, 'while current price is', prices[current_index])
         if type == 'BUY':
             if price > current_price - eps:
                 send_order_status(id, 'CONFIRMED', type, quantity, current_price + delta)
