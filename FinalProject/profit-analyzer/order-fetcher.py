@@ -51,7 +51,7 @@ if __name__ == '__main__':
     sell_qty = defaultdict(int)
     aggregated_data = defaultdict(list)
 
-    documents = get_all_documents(COUCHDB_URL, USERNAME, PASSWORD, DB_NAME)
+    documents = get_all_documents(COUCHDB_URL, DB_NAME, USERNAME, PASSWORD)
     for doc in documents:
         order = doc['doc']
         order_id = order['_id']
