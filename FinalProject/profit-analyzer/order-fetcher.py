@@ -53,6 +53,7 @@ if __name__ == '__main__':
 
     documents = get_all_documents(COUCHDB_URL, DB_NAME, USERNAME, PASSWORD)
     for doc in documents:
+        print(doc)
         order = doc['doc']
         order_id = order['_id']
         order_type = order['type']
@@ -62,7 +63,7 @@ if __name__ == '__main__':
         if not bot.startswith("bot"):
             continue
 
-        if order_type == "buy":
+        if order_type == "BUY":
             net_position[bot] += quantity  # Add to the position
             total_profit[bot] -= quantity * price
             buy_qty[bot] += quantity
@@ -73,7 +74,7 @@ if __name__ == '__main__':
                 'price': price,
                 'profit': total_profit[bot] + net_position[bot] * price
             })
-        elif order_type == "sell":
+        elif order_type == "SELL":
             net_position[bot] -= quantity  # Subtract from the position
             total_profit[bot] += quantity * price
             sell_qty[bot] += quantity
