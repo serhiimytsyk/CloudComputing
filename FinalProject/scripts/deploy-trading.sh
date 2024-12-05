@@ -27,16 +27,16 @@ sudo docker build -t order-fetcher ../profit-analyzer
 sudo docker tag order-fetcher 192.168.5.145:5000/order-fetcher
 sudo docker push 192.168.5.145:5000/order-fetcher
 
-sudo kubectl apply -f ../Deployment/zookeeper-deployment.yaml
-sudo kubectl apply -f ../Deployment/kafka-deployment.yaml
-sudo kubectl apply -f ../Deployment/database-deployment.yaml
-sudo kubectl apply -f ../Deployment/database-consumer-deployment.yaml
-sudo kubectl apply -f ../Service/zookeeper-service.yaml
-sudo kubectl apply -f ../Service/kafka-service.yaml
-sudo kubectl apply -f ../Service/database-service.yaml
+kubectl apply -f ../Deployment/zookeeper-deployment.yaml
+kubectl apply -f ../Deployment/kafka-deployment.yaml
+kubectl apply -f ../Deployment/database-deployment.yaml
+kubectl apply -f ../Deployment/database-consumer-deployment.yaml
+kubectl apply -f ../Service/zookeeper-service.yaml
+kubectl apply -f ../Service/kafka-service.yaml
+kubectl apply -f ../Service/database-service.yaml
 
 sleep 30
-sudo kubectl apply -f ../Job/exchange-job.yaml
-sudo kubectl apply -f ../Job/trading-bot1-job.yaml
+kubectl apply -f ../Job/exchange-job.yaml
+kubectl apply -f ../Job/trading-bot1-job.yaml
 
 echo "All services deployed successfully!"
