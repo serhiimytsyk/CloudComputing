@@ -12,19 +12,12 @@ from statsmodels.tsa.arima.model import ARIMA
 import threading
 import warnings
 import pandas as pd
-
-print('0')
-
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
-
-print('1')
 
 warnings.filterwarnings('ignore', message='Non-stationary starting autoregressive parameters')
 warnings.filterwarnings('ignore', message='Non-invertible starting MA parameters')
 warnings.filterwarnings('ignore', message='Maximum Likelihood optimization failed to')
-
-
 
 producer = KafkaProducer(bootstrap_servers = 'kafka:9092',
                          acks = 0,
@@ -37,8 +30,6 @@ consumer2 = KafkaConsumer(bootstrap_servers = 'kafka:9092',
                          api_version = (0, 11, 5), consumer_timeout_ms = 600000)
 
 bot_id = 'bot1_'
-
-print('2')
 
 time.sleep(5)
 
@@ -76,7 +67,7 @@ def create_order(id, type_, quantity, price):
         'quantity': quantity,
         'price': price
     }
-    print('We', type_, quantity, 'of stock at', price)
+    print('We want to', type_, quantity, 'of stock at', price)
     return order
 
 def send_order(order):
@@ -91,11 +82,8 @@ def other_type(type_):
         return 'BUY'
     else:
         return ''
-    
-print('3')
 
 def consume_prices():
-    print('4')
     consumer1.subscribe(topics=['prices'])
     idx = 0
     for msg in consumer1:
@@ -121,7 +109,6 @@ def consume_prices():
         time.sleep(0.001)
 
 def consume_orders_status():
-    print('5')
     consumer2.subscribe(topics=['orders_status'])
     for msg in consumer2:
         req = json.loads(msg.value.decode('utf-8'))

@@ -7,13 +7,8 @@ if sys.version_info >= (3, 12, 0):
     sys.modules['kafka.vendor.six.moves'] = six.moves
 
 import threading
-
-print('0')
-
 from kafka import KafkaProducer
 from kafka import KafkaConsumer
-
-print('1')
 
 producer = KafkaProducer(bootstrap_servers='kafka:9092',
                          acks=0,
@@ -21,8 +16,6 @@ producer = KafkaProducer(bootstrap_servers='kafka:9092',
 
 consumer = KafkaConsumer(bootstrap_servers='kafka:9092',
                          api_version=(0, 11, 5), consumer_timeout_ms = 600000)
-
-print('2')
 
 prices = []
 with open('./2024-11-20.txt', 'r') as file:
@@ -32,8 +25,6 @@ with open('./2024-11-20.txt', 'r') as file:
 delta = 0.001
 eps = 0.00001
 current_index = 0
-
-print('3')
 
 def send_order_status(id, status, type_, quantity, price):
     order_status = {
@@ -51,7 +42,6 @@ def send_order_status(id, status, type_, quantity, price):
 time.sleep(10)
 
 def produce():
-    print('4')
     global current_index
     for i in range(len(prices)):
         price_info = {
@@ -66,7 +56,6 @@ def produce():
         time.sleep(1)
 
 def consume():
-    print('5')
     consumer.subscribe(topics=['orders'])
     for msg in consumer:
         print('consume', current_index)
