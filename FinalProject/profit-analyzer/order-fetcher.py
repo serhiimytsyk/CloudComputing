@@ -60,6 +60,9 @@ if __name__ == '__main__':
         order_type = order['type']
         quantity = order['quantity']
         price = order['price']
+        status = order['status']
+        if status != "CONFIRMED":
+            continue
         bot = order_id.split("_")[0]
         confirmation_time = int(order['confirmation_time'])
 
