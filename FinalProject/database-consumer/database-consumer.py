@@ -73,13 +73,17 @@ if __name__ == "__main__":
 
     consumer = KafkaConsumer(bootstrap_servers="kafka:9092")
     consumer.subscribe(topics=["orders_status"])
+
+    confirmation_time = 0
     for msg in consumer:
         document = json.loads(msg.value.decode('utf-8'))
         print(document, '.')
         try:
             document['_id'] = str(document["id"])
+            document['confirmation_time'] = confirmation_time
             del document["id"]
             insert_document(DB_NAME, document, action="post")
             time.sleep(0.001)
         except KeyError:
             print("json object does not have _id key.")
+        confirmation_time += 1
