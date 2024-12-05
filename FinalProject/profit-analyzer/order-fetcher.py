@@ -86,7 +86,7 @@ if __name__ == '__main__':
                 'price': price,
                 'profit': total_profit[bot] + net_position[bot] * price
             })
-            output_content[bot] += f"{net_position[bot]},{total_profit[bot]},{price}\n"
+            output_content[bot] += f"{net_position[bot]},{total_profit[bot] + net_position[bot] * price},{price}\n"
 
     print(f"{'BOT':<10} {'PROFIT':<10} {'CURRENT POSITION':<20} {'TOTAL BUY QTY':<15} {'TOTAL SELL QTY':<15}\n")
     print("-" * 70)  # Dash line under the header
