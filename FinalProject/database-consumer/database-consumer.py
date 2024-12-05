@@ -75,6 +75,7 @@ if __name__ == "__main__":
     consumer.subscribe(topics=["orders_status"])
     for msg in consumer:
         document = json.loads(msg.value.decode('utf-8'))
+        print(document, '.')
         try:
             document['_id'] = str(document["id"])
             del document["id"]
