@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,17 +14,17 @@ spec:
         app: zookeeper
     spec:
       containers:
-      - name: zookeeper
+        - name: zookeeper
         image: 192.168.5.145:5000/zookeeper
         ports:
-        - containerPort: 2181
+          - containerPort: 2181
         volumeMounts:
-        - name: zookeeper-data
+          - name: zookeeper-data
           mountPath: /data
-        - name: zookeeper-datalog
+          - name: zookeeper-datalog
           mountPath: /datalog
       volumes:
-      - name: zookeeper-data
+        - name: zookeeper-data
         emptyDir: {}
-      - name: zookeeper-datalog
+        - name: zookeeper-datalog
         emptyDir: {}

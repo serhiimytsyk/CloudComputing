@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,5 +16,5 @@ spec:
         app: database-consumer
     spec:
       containers:
-      - name: database-consumer
+        - name: database-consumer
         image: 192.168.5.145:5000/database-consumer
