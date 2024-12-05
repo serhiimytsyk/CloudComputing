@@ -14,6 +14,10 @@ sudo docker build -t trading-bot1 ../trading-bot1
 sudo docker tag trading-bot1 192.168.5.145:5000/trading-bot1
 sudo docker push 192.168.5.145:5000/trading-bot1
 
+sudo docker build -t trading-bot2 ../trading-bot2
+sudo docker tag trading-bot2 192.168.5.145:5000/trading-bot2
+sudo docker push 192.168.5.145:5000/trading-bot2
+
 sudo docker build -t exchange ../exchange
 sudo docker tag exchange 192.168.5.145:5000/exchange
 sudo docker push 192.168.5.145:5000/exchange
