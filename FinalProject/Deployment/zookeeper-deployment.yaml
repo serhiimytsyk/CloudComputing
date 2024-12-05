@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: zookeeper
-        image: 192.168.5.245:5000/zookeeper
+        image: 192.168.5.145:5000/zookeeper
         ports:
         - containerPort: 2181
         volumeMounts:

@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: exchange
-        image: 192.168.5.245:5000/order-fetcher
+        image: 192.168.5.145:5000/order-fetcher
         imagePullPolicy: Always
         command: ["sh", "-c"]
         args: ["python3 order-fetcher-docker.py && sleep 3600"]

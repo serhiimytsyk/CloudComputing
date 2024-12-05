@@ -1,11 +1,11 @@
 import time
 import json
-#import sys
+import sys
 
-#if sys.version_info >= (3, 12, 0):
-##    import six
-#    sys.modules['kafka.vendor.six.moves'] = six.moves
-#
+if sys.version_info >= (3, 12, 0):
+    import six
+    sys.modules['kafka.vendor.six.moves'] = six.moves
+    
 import secrets
 import string
 from statsmodels.tsa.arima.model import ARIMA
