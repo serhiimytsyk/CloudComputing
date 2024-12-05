@@ -1,116 +1,24 @@
 ```bash
-cd PA/PA3 
-kubectl get pods -A -o wide # show pods 
 kubectl logs -f <pod-name>  # check logs
-kubectl delete job iot-producer1 # remove job
-bash deploy.sh # deploy everything
 ```
 
 
-## Experiment 1
+## Instructions
 ```bash
-sudo nano deploy.sh
-comment last 4 jobs
-sudo nano Job/iot-producer1-job.yaml
-Edit id to iot_producer_one_1
-
-```bash
-kubectl delete job iot-producer1
-for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
-bash deploy.sh
-```
-wait 900 seconds  
-```bash
+cd PA/FinalProject/scripts
+kubectl get pods -A -o wide
+kubectl delete job trading-bot1
+kubectl delete job exchange
+kubectl delete job order-fetcher
+kubectl delete deployment database-consumer
+bash deploy-trading.sh
+kubectl get pods -A -o wide
+wait 600 seconds
+bash deploy-order-fetcher.sh
 kubectl get pods -A -o wide 
-kubectl cp default/<pod-name>:/app/output/iot_producer_one_1.json ./iot_producer/target/iot_producer_one_1.json
-``` 
-
-## Experiment 2
-```bash
-sudo nano deploy.sh
-comment last 3 jobs
-sudo nano Job/iot-producer1-job.yaml
-Edit id to iot_producer_two_1
-
-```bash
-kubectl delete job iot-producer1
-kubectl delete job iot-producer2
-for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
-bash deploy.sh
-``` 
-wait 900 seconds  
-```bash
-kubectl get pods -A -o wide  
-kubectl cp default/<pod-name>:/app/output/iot_producer_two_1.json ./iot_producer/target/iot_producer_two_1.json 
-``` 
-## Experiment 3  
-```bash
-sudo nano deploy.sh
-comment last 2 jobs
-sudo nano Job/iot-producer1-job.yaml
-Edit id to iot_producer_three_1
-
-```bash
-kubectl delete job iot-producer1
-kubectl delete job iot-producer2
-kubectl delete job iot-producer3
-for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
-bash deploy.sh
-``` 
-wait 900 seconds  
-```bash
-kubectl get pods -A -o wide  
-kubectl cp default/<pod-name>:/app/output/iot_producer_three_1.json ./iot_producer/target/iot_producer_three_1. json   
-```
-## Experiment 4   
-```bash
-sudo nano deploy.sh
-comment last 1 jobs
-sudo nano Job/iot-producer1-job.yaml
-Edit id to iot_producer_four_1
-
-```bash
-kubectl delete job iot-producer1
-kubectl delete job iot-producer2
-kubectl delete job iot-producer3
-kubectl delete job iot-producer4 
-for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
-bash deploy.sh
-```
-wait 900 seconds
-kubectl get pods -A -o wide
-kubectl cp default/<pod-name>:/app/output/iot_producer_four_1.json ./iot_producer/target/iot_producer_four_1.json
-
-## Experiment 5  
-```bash
-sudo nano deploy.sh
-comment last 0 jobs
-sudo nano Job/iot-producer1-job.yaml
-Edit id to iot_producer_five_1
-
-```bash
-kubectl delete job iot-producer1
-kubectl delete job iot-producer2
-kubectl delete job iot-producer3
-kubectl delete job iot-producer4 
-kubectl delete job iot-producer5 
-for p in $(kubectl get pods | grep Terminating | awk '{print $1}'); do kubectl delete pod $p --grace-period=0 --force;done
-bash deploy.sh
-```
-wait 900 seconds  
-```bash
-kubectl get pods -A -o wide
-kubectl cp default/<pod-name>:/app/output/iot_producer_five_1.json ./iot_producer/target/iot_producer_five_1.json
-```
-
-# Git commands 
-```bash
-cd iot_producer/target 
-git add iot_producer_one_1.json 
-git add iot_producer_two_1.json 
-git add iot_producer_three_1.json
-git add iot_producer_four_1.json  
-git add iot_producer_five_1.json 
-git commit -m "latencies to plot" 
+kubectl cp default/<pod-name>:/app/bot1.txt ../profit-analyzer/bot1.txt
+sudo nano ../profit-analyzer/bot1.txt
+git add ../profit-analyzer/bot1.txt
+git commit -m "profits" 
 git push
 ```
