@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: zookeeper
 spec:
-  replicas:
+  replicas: 1
   selector:
     matchLabels:
       app: zookeeper
@@ -15,16 +15,16 @@ spec:
     spec:
       containers:
         - name: zookeeper
-        image: 192.168.5.145:5000/zookeeper
-        ports:
-          - containerPort: 2181
-        volumeMounts:
-          - name: zookeeper-data
-          mountPath: /data
-          - name: zookeeper-datalog
-          mountPath: /datalog
+          image: 192.168.5.145:5000/zookeeper
+          ports:
+            - containerPort: 2181
+          volumeMounts:
+            - name: zookeeper-data
+              mountPath: /data
+            - name: zookeeper-datalog
+              mountPath: /datalog
       volumes:
         - name: zookeeper-data
-        emptyDir: {}
+          emptyDir: {}
         - name: zookeeper-datalog
-        emptyDir: {}
+          emptyDir: {}

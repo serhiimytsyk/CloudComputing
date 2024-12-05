@@ -1,3 +1,4 @@
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -9,9 +10,9 @@ spec:
         app: order-fetcher
     spec:
       containers:
-      - name: exchange
-        image: 192.168.5.145:5000/order-fetcher
-        imagePullPolicy: Always
-        command: ["sh", "-c"]
-        args: ["python3 order-fetcher-docker.py && sleep 3600"]
+        - name: order-fetcher
+          image: 192.168.5.145:5000/order-fetcher
+          imagePullPolicy: Always
+          command: ["sh", "-c"]
+          args: ["python3 order-fetcher-docker.py && sleep 3600"]
       restartPolicy: Never
